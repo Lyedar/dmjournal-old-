@@ -1,0 +1,216 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:300,400,700");
+
+.textbox{
+	color: black;
+	display: inline-block;
+	float: left;
+}
+
+.sideText {
+	display: inline-block;
+	float: left;
+	clear: left;
+	width: 250px;
+	text-align: right;
+}
+
+body {
+	background-color:  black;
+	color: white;
+	background-image: url("../images/woodBackground.jpg");
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+button {
+ 	color: black;
+ }
+
+input.Center {
+	text-align : center;
+}
+h1.inline, h2.inline, h3.inline, h4.inline, h5.inline {
+	display:inline;
+	text-decoration: underline;
+}
+
+.scroll{
+	background-color: #b38600;
+}
+
+
+
+.underLine{
+	text-decoration: underline;
+}
+
+.fullBack{
+	background-color: #eee;
+}
+
+.noLine{
+	border: none;
+}
+
+.modalHeight{
+	height: 50vw;
+}
+
+
+.noWidthResize {
+	height: auto;
+	resize:vertical;	
+}
+
+.transparent {
+	outline: none;
+	overflow: auto;
+	border-style: none;
+	background-color: transparent;
+
+	 -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.transparentInput{
+	border: none;
+	background-color: transparent;
+}
+
+.black {
+ 	color: black;
+ }
+
+ .red {
+ 	color: red;
+ }
+
+ .green {
+ 	color: limegreen;
+ }
+
+.link {
+	color: #337ab7;
+	padding: 20px;
+	text-shadow: 1px 1px 1px black;
+	font-size: 18px
+}
+
+.carousel-inner img {
+	margin: auto;
+	padding: 20px 0 150px 0;
+}
+
+.profileCD {
+	background-color: rgba(0, 0, 0, .5);
+	line-height: 175%;
+	border-radius: 25px
+}
+
+.profileName {
+	padding: 50px 0 25px 0;
+	text-shadow: 5px 5px black;
+}
+
+.textShadow {
+	text-shadow: 1px 1px 1px black;
+}
+
+.textShadowTitle {
+	text-shadow: 2px 2px 1px black;
+}
+
+.imageShadow {
+	border-radius: 10px;
+	background-color: black;
+	box-shadow: 15px 15px 20px black;
+}
+
+.centerText {
+	text-align: center;
+}
+
+.leftText {
+	text-align: left;
+}
+
+.alertText {
+	color: red;
+	font-size: 20px;
+}
+
+.paddingAddScan {
+	padding: 0 0 20px 0;
+}
+
+.centerTextBox {
+    margin-left: 15%;
+    width: 70%;
+    padding-left: 15px;
+
+}
+
+.centerButton {
+	margin-top: 5px;
+}
+
+.invisableButton{
+	background:none;
+	border:none; 
+}
+
+.invisableButton:hover{
+	background:hotpink;
+}
+
+.widthChange{
+	margin: 0 20px 0 20px;
+}
+
+.navbar-fixed-top {
+	margin-top: 1%;
+    margin-left: 2%;
+    margin-right: 2%;
+    border-radius: 10px
+}
+
+.marginTop {
+	margin: 10px;
+}
+
+.marginBiggerTop {
+	margin: 70px;
+}
+
+.profileCal table {
+	margin: 0 auto;
+}
+
+.popover .profileCal{
+	padding: 30px;
+}
+
+.profileCal th {
+	padding: 5px;
+}
+
+.twentyTwo {
+	font-size: 25px;
+}
+
+.descriptionTitle{
+	text-decoration: underline;
+	line-height: 30px;
+}
+
+.response{
+	font-style: italic;
+	font-weight: bold;
+	color: #92abbd;
+}
+
+.indent {
+	padding-left: 25px;
+}
