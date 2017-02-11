@@ -8,6 +8,8 @@ import requestApi from '../utilities/requests'
 import GroupForm from '../components/GroupForm'
 import {connect} from 'react-redux'
 
+import {Editor, EditorState} from 'draft-js';
+
 import EditButton from '../components/ToggleEditButton'
 import CharacterSheet from './CharacterSheet'
 import PanelBuilder from '../components/panelBuilder'
@@ -55,8 +57,10 @@ function mapDispatchToProps(dispatch){
  	constructor(props){
 		super(props)
 		this.state={
-			open: false
+			open: false,
+			editorState: EditorState.createEmpty()
 		}	
+		this.onChange = (editorState) => this.setState({editorState});
 	}
 
 	ToggleOpen(){
@@ -178,6 +182,8 @@ function mapDispatchToProps(dispatch){
 			 			/>
 			 			</Col>
 			 		</Row>	
+
+			 		<Editor editorState={this.state.editorState} onChange={this.onChange} />
  			</div>
 
  		)

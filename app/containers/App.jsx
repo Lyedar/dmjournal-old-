@@ -6,7 +6,6 @@ import styles from 'css/main';
 import {setUserAction, addProfileAction, setCurrentUserAction, loginTrueAction} from '../redux/actions';
 import requestApi from '../utilities/requests';
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" />
-
 const cx = classNames.bind(styles);
 
 /*

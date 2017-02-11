@@ -6,6 +6,7 @@ var app = express();
 var mongoose = require('mongoose');
 var passport = require('passport');
 
+
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/dmjournal');
 
