@@ -57,15 +57,18 @@ export default class SpellBook extends React.Component {
  		};
  	}
 
+ 	componentWillMount(){
+ 		this.requestSpellList()
+ 	}
+
  	requestSpellList(){
- 		self = this
  		requestApi('api/v1/allspells')()
  		.then((spells)=>{
  			if(spells){
- 				self.setState({spellList: spells})
- 				self.tableSetUp()
+ 				this.setState({spellList: spells})
+ 				this.tableSetUp()
  			}else{
- 				self.setState({spellsList: ['nothing']})
+ 				this.setState({spellsList: ['nothing']})
  			}
  		})
  		
@@ -80,15 +83,7 @@ export default class SpellBook extends React.Component {
  		}
  	}
 
- 	closeModal(){
- 		this.setState({showModal : false})
- 	}
-
- 	showModal(){
- 		var self = this
- 		self.requestSpellList()
- 		self.setState({showModal: true})
- 	} 		
+ 	
 
  	openSpell(id){
  		this.setState({spellId : id })
@@ -99,12 +94,9 @@ export default class SpellBook extends React.Component {
  		self = this
  		var tableList = self.state.spellList.map(function(spell){
  			var name = spell.name
- 			return (<tr key={name + ' row'} onClick={(e)=> self.openSpell(spell.id)}>
+ 			return (<tr className='hover' key={name + ' row'} onClick={(e)=> self.openSpell(spell.id)}>
 		 				<td key={name + ' level'} className='centerText'>{spell.level}</td>
 		 				<td key={name + ' name'} className='centerText'>{name}</td>
-		 				<td key={name + ' classes'} className='centerText'>{ spell.classes.map((el) => 
-		 					(<span key={name + ' ' + el} className='centerText'>{el} <br/> </span>)) }
-		 				</td>
 		 				<td key={name + ' school'} className='centerText'>{spell.school}</td>
 	 				</tr>)
  		})
@@ -152,13 +144,12 @@ export default class SpellBook extends React.Component {
 
  	spellTable(){
  		return(
- 				<Table key='spellTable' className='black' striped bordered condensed hover>
+ 				<Table key='spellTable' bordered condensed hover>
  					<thead key='spellthead'>
  						<tr>
-	 						<th key='levelhead'className='black centerText'>Level <Glyphicon glyph={this.state.level ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('level')}  /></th>
-	        				<th key='namehead'className='black centerText'>Name <Glyphicon glyph={this.state.name ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('name')}  /></th>
-	        				<th key='classeshead'className='black centerText'>Classes <Glyphicon glyph={this.state.class ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('class')}  /></th>
-	        				<th key='schoolheadd'className='black centerText'>School <Glyphicon glyph={this.state.school ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('school')}  /></th>
+	 						<th key='levelhead'className='centerText'>Level <Glyphicon glyph={this.state.level ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('level')}  /></th>
+	        				<th key='namehead'className='centerText'>Name <Glyphicon glyph={this.state.name ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('name')}  /></th>
+	        				<th key='schoolheadd'className='centerText'>School <Glyphicon glyph={this.state.school ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('school')}  /></th>
 	        			</tr>
  					</thead>
  					<tbody key='spelltbody'>
@@ -167,35 +158,22 @@ export default class SpellBook extends React.Component {
  				</Table>)
  	}
 
- 	modal(){
- 		return(
- 			<Modal show={this.state.showModal} bsSize = "large" onHide={this.closeModal.bind(this)}>
-	         	<Modal.Header closeButton>
-	            	<Modal.Title className='centertext black'>SpellBook</Modal.Title>
-	          	</Modal.Header>
-	          	<Modal.Body>
-		 			<Col md={4} mdOffset={4} className='centerText'>
-						<Button id='spellbookButton' active={this.state.spellbookButton} onClick={(e)=> this.switchData(e.target.id)}> Your SpellBook </Button>
-						<Button id='directoryButton' active={this.state.directoryButton} onClick={(e)=>this.switchData(e.target.id)}> Directory </Button>
-					</Col>
-					<Col md={1} mdOffset={3}>
-						<Button id='addspellButton'><Glyphicon glyph={'plus'} /> </Button>
-					</Col>	
-					<Col md={12}>
-					<br/><br/>
-					{this.spellTable()}
-					</Col>
-				</Modal.Body>	
-	          	<Modal.Footer bsClass='noLine'><span className = "centerText">end</span></Modal.Footer>
-        	</Modal>				
- 	)}
 
 	render(){
-		return(<span>
-			<Button onClick={this.showModal.bind(this)}>SpellBook</Button>
-			{this.modal()}
+		return(<Row>
+			<Col md={4} mdOffset={4} className='centerText'>
+				<Button id='spellbookButton' active={this.state.spellbookButton} onClick={(e)=> this.switchData(e.target.id)}> Your SpellBook </Button>
+				<Button id='directoryButton' active={this.state.directoryButton} onClick={(e)=>this.switchData(e.target.id)}> Directory </Button>
+				</Col>
+				<Col md={1} mdOffset={3}>
+					<Button id='addspellButton'><Glyphicon glyph={'plus'} /> </Button>
+				</Col>	
+				<Col md={12}>
+				<br/><br/>
+			{this.spellTable()}
+			</Col>
 			{this.props.showSpell ? <SpellModal spellId={this.state.spellId}/> : <br/>}
-			</span>
+			</Row>
 			)
 	}
 

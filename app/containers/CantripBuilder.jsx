@@ -139,7 +139,7 @@ export default class CantripBuilder extends React.Component {
 				<Col md={6}>
 				 	<FormGroup controlId="damageTypeSelect">
 	     				<OverlayTrigger placement='bottom' overlay={damageTip}>
-	     					<ControlLabel className='black'>Damage Type</ControlLabel>
+	     					<ControlLabel>Damage Type</ControlLabel>
 	      				</OverlayTrigger>
 	      				<FormControl componentClass="select" onChange={(e)=> self.setValue('Damage' , e.target.value)}>
 	        				<option value={0}>None</option>
@@ -156,7 +156,7 @@ export default class CantripBuilder extends React.Component {
 	    		<Col md={6}>
 				 	<FormGroup controlId="saveSelect">
 				 		<OverlayTrigger placement='bottom' overlay={saveTip}>
-	     					<ControlLabel className='black'>Save</ControlLabel>
+	     					<ControlLabel>Save</ControlLabel>
 	     				</OverlayTrigger>	
 	      				<FormControl componentClass="select" onChange={(e)=> self.setValue('Save' , e.target.value)}>
 	        				<option value={0}>None</option>
@@ -174,8 +174,8 @@ export default class CantripBuilder extends React.Component {
 		    		<ButtonToolbar controlId='RangeSelect' className='centerText'>
 		    			<OverlayTrigger placement='bottom' overlay={rangeTip}>
 			    			<ButtonGroup>
-			    				<Button id='melee'  active={self.state.melee} className='black centerText' bsSize='small' value={0} onClick={(e)=> self.setValue('Range' , e.target.value, e.target.id)}> Melee </Button>
-			    				<Button id='ranged' active={self.state.ranged} className='black centerText' bsSize='small' value={-1} onClick={(e)=> self.setValue('Range' , e.target.value, e.target.id)}> Ranged </Button>
+			    				<Button id='melee'  active={self.state.melee} className='centerText' bsSize='small' value={0} onClick={(e)=> self.setValue('Range' , e.target.value, e.target.id)}> Melee </Button>
+			    				<Button id='ranged' active={self.state.ranged} className='centerText' bsSize='small' value={-1} onClick={(e)=> self.setValue('Range' , e.target.value, e.target.id)}> Ranged </Button>
 			    			</ButtonGroup>	
 		    			</OverlayTrigger>
 		    		</ButtonToolbar>
@@ -183,17 +183,17 @@ export default class CantripBuilder extends React.Component {
 	    		<Row>
 	    		<Col md={6}>
 	    			<OverlayTrigger placement='bottom' overlay={areaTip}>
-		    			<Button id='AoEButton' active={self.state.AoEButton} className='black centerText' value={-1} onClick={(e)=> self.setValue('Area' , e.target.value, e.target.id)}> Area of Affect </Button>
+		    			<Button id='AoEButton' active={self.state.AoEButton} className='centerText' value={-1} onClick={(e)=> self.setValue('Area' , e.target.value, e.target.id)}> Area of Affect </Button>
 		    		</OverlayTrigger>	
 	    		</Col>
 
 	    		<Col md={12}>
 	    			<OverlayTrigger placement='bottom' overlay={specialTip}>
-	    				<Button id='SEoTButton' active={self.state.SEoTButton} className='black centerText' value={-1} onClick={(e)=> self.setValue('Special' , e.target.value, e.target.id)}> Special Effect on Targets </Button>
+	    				<Button id='SEoTButton' active={self.state.SEoTButton} className='centerText' value={-1} onClick={(e)=> self.setValue('Special' , e.target.value, e.target.id)}> Special Effect on Targets </Button>
 	    			</OverlayTrigger>	
 	    		</Col>
 	    		</Row>
-	    		<FormControl id='results' componentClass='textarea' className='black noWidthResize centerText' placeholder='Results' value={self.state.results ? self.state.results : ''}/>
+	    		<FormControl id='results' componentClass='textarea' className='noWidthResize centerText' placeholder='Results' value={self.state.results ? self.state.results : ''}/>
 	    		<br/>
 	    		<Button onClick={self.runBuilder.bind(self)}>Create Cantrip</Button>
 			</Row>

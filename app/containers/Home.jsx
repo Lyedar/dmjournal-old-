@@ -2,7 +2,7 @@ import React from 'react';
 import 'whatwg-fetch';
 import { Link, IndexLink } from 'react-router';
 import {browserHistory} from 'react-router';
-import {Form, FormGroup, FormControl, ControlLabel, Col, Row, Button, Panel, Glyphicon, Modal} from 'react-bootstrap'
+import {Form, FormGroup, FormControl, ControlLabel, Col, Row, Button, Panel, Glyphicon, Modal, Jumbotron, Well} from 'react-bootstrap'
 import {setCurrentUserAction, setUserNameAction, toggleLoginAction, setEmailAction, setPasswordAction, setConfirmPasswordAction, setErrorMessageAction, changeEditAction} from '../redux/actions'
 import requestApi from '../utilities/requests'
 import GroupForm from '../components/GroupForm'
@@ -17,6 +17,7 @@ import CantripBuilder from './CantripBuilder'
 import DiceRoller from './DiceRoller'
 import SpellBook from './SpellBook'
 import MonsterDiary from './MonsterDiary'
+import NoteMain from './Notes/NoteMain'
 
 
 
@@ -58,16 +59,14 @@ function mapDispatchToProps(dispatch){
 		super(props)
 		this.state={
 			open: false,
-			editorState: EditorState.createEmpty()
+			current : null
 		}	
-		this.onChange = (editorState) => this.setState({editorState});
 	}
 
 	ToggleOpen(){
 		var check = this.state.open
 		this.setState({open: !check})
 	}
-
 
  	signUpRequest(e) {
  		e.preventDefault()
@@ -94,6 +93,10 @@ function mapDispatchToProps(dispatch){
  		}
  	}
 
+ 	setCurrent(element){
+ 		this.setState({current : element})
+ 	}
+
  	render(){ 
  		return (
  			<div className = 'centerText marginTop'>
@@ -101,8 +104,9 @@ function mapDispatchToProps(dispatch){
  				<p>A place for all your things as a DM, easy access to information about the players and your juicy plot hooks</p>
  				
 
- 					{/* Player Character Buttons */}
-
+				{/* Player Character Buttons */}
+				<FormGroup>
+					<Col md={12}><ControlLabel> Player Characters </ControlLabel></Col>
 	 				<Col md={4}>
 	 					<CharacterSheet character='Trave'/>
 	 				</Col>
@@ -112,78 +116,47 @@ function mapDispatchToProps(dispatch){
 	 				<Col md={4}>
 	 					<CharacterSheet character="Blane"/>
 	 				</Col>
-	 				<br/>	
-	 				<br/>
+ 				</FormGroup>
 
-	 				{/* Panels of Tools */}	
-		 			<Row>
-		 				<Col md={4}>
-			 			<PanelBuilder
-			 				title="Cantrip Gen"
-			 				body={(<span><CantripBuilder /></span>)}	
-			 			/>
-			 			</Col>
-			 			<Col md={4}>
-			 			<PanelBuilder
-			 				title='Dice Roll'
-			 				body={(<span><DiceRoller /></span>)}	
-			 			/>
-			 			</Col>
-			 			<Col md={4}>
-			 			<PanelBuilder
-			 				title='NPC Generator'
-			 				body={(<span><h1 className='black centerText'>NPC Generator</h1></span>)}	
-			 			/>
-			 			</Col>
-			 		</Row>
-			 		<Row>	
-			 			<Col md={4}>
-			 			<PanelBuilder
-			 				title='Spell Book'
-			 				body={(<span><SpellBook /></span>)}	
-			 			/>
-			 			</Col>
-			 			<Col md={4}>
-			 			<PanelBuilder
-			 				title='Loot Generator'
-			 				body={(<span><h1 className='black centerText'>Loot Generator</h1></span>)}	
-			 			/>
-			 			</Col>
-			 			<Col md={4}>
-			 			<PanelBuilder
-			 				title='Encounters'
-			 				body={(<span><h1 className='black centerText'>Encounters</h1></span>)}	
-			 			/>
-			 			</Col>
-			 		</Row>
-			 		<Row>	
-			 			<Col md={4}>
-			 			<PanelBuilder
-			 				title='Sound board'
-			 				body={(<span><h1 className='black centerText'>Sound Board</h1></span>)}	
-			 			/>
-			 			</Col>
-			 			<Col md={4}>
-			 			<PanelBuilder
-			 				title='Note Box'
-			 				body={(<span><h1 className='black centerText'>NOTES</h1></span>)}	
-			 			/>
-			 			</Col>
-			 			<Col md={4}>
-			 			<PanelBuilder
-			 				title='DM Screen'
-			 				body={(<span><h1 className='black centerText'>RANDOM INFO</h1></span>)}	
-			 			/>
-			 			</Col>
-			 			<Col md={4}>
-			 			<PanelBuilder
-			 				title='Monster Manual'
-			 				body={(<span><MonsterDiary /></span>)}	
-			 			/>
-			 			</Col>
-			 		</Row>	
+	 			{/* Panels of Tools */}	
+	 			<Col md = {3}>	
 
-			 		<Editor editorState={this.state.editorState} onChange={this.onChange} />
+ 				<Row><Col>
+ 				<Button onClick={(e) => this.setCurrent(<span><CantripBuilder /></span>)}>Cantrip Builder</Button>
+	 			</Col></Row>
+	 			<Row><Col >
+	 			<Button onClick={(e) => this.setCurrent(<span><DiceRoller /></span>)}>Dice Roller</Button>
+	 			</Col></Row>
+	 			<Row><Col >
+	 			<Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>NPC Generator</h1></span>)}>NPC Generator</Button>
+	 			</Col></Row>	
+	 			<Row><Col >
+	 			<Button onClick={(e) => this.setCurrent(<span><SpellBook /></span>)}>Spell Book</Button>
+	 			</Col></Row>
+	 			<Row><Col >
+	 			<Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>Loot Generator</h1></span>)}>Loot Generator</Button>
+	 			</Col></Row>
+	 			<Row><Col >
+	 			<Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>Encounters</h1></span>)}>Encounters</Button>
+	 			</Col></Row>
+	 			<Row><Col >
+	 			<Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>Sound Board</h1></span>)}>Sound Board</Button>
+	 			</Col></Row>
+	 			<Row><Col >
+	 			<Button onClick={(e) => this.setCurrent(<span><NoteMain defaultText='Hello this is a text'/></span>)}>NotePad</Button>
+	 			</Col></Row>
+	 			<Row><Col >
+	 			<Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>RANDOM INFO</h1></span>)}>Dm Screen</Button>
+	 			</Col></Row>
+	 			<Row><Col >
+	 			<Button onClick={(e) => this.setCurrent(<span><MonsterDiary /></span>)}>Monster Diary</Button>
+	 			</Col></Row>
+
+	 			</Col>
+	 			
+	 			<Col md={9}>
+	 				<Well bsSize='lg' className='scrollBackground'>{this.state.current}</Well>
+    			</Col>
  			</div>
 
  		)

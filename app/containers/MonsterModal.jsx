@@ -20,7 +20,6 @@ function mapStateToProps(state, ownProps){
   	return {
   		monsterVisable: state.get('showMonster'),
   		monster: state.get('monsterSelected'),
-
 	    userName,
 	    profiles : state.get('profiles').toJS(),
 	    userProfile: state.getIn(['profiles', userName]),
@@ -56,7 +55,6 @@ export default class MonsterModal extends React.Component {
  	componentWillMount(){
  		requestApi('api/v1/monster/' + this.props.monsterId)()
  		.then((monster)=>{
- 			console.log('monster, ' + monster)
  			if(monster){
  				this.props.setMonster(monster)
  			}
@@ -94,7 +92,6 @@ export default class MonsterModal extends React.Component {
  				</tr>))
  		})
  		tempObj[string] = tempArr
- 		console.log(tempObj)
  		this.setState(tempObj)
  	}
 

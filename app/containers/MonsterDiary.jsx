@@ -30,7 +30,6 @@ function mapDispatchToProps(dispatch, ownProps){
   return {
   	setMonster: (monster) => dispatch(setMonsterActive(monster)),
   	setShowMonster: (toggle) => dispatch(setShowMonster(toggle)),
-
   	addProfile: (profile) => dispatch(addProfileAction(profile)),
   	addPartyMember: (member) => dispatch(addToListAction(member)), 
   	deletePartyMember: (member) => dispatch(deleteFromListAction(member))
@@ -45,7 +44,6 @@ export default class MonsterDiary extends React.Component {
  			monsterId : false,
  			diaryButton : true,
  			directoryButton : false,
- 			showModal : false,
  			monsterList: [],
  			monsterTab: [],
  			showSpell: false,
@@ -55,6 +53,10 @@ export default class MonsterDiary extends React.Component {
  			challenge_rating: false,
  			error: false
  		};
+ 	}
+
+ 	componentWillMount(){
+ 		this.requestMonsterList()
  	}
 
  	requestMonsterList(){
@@ -80,26 +82,16 @@ export default class MonsterDiary extends React.Component {
  		}
  	}
 
- 	closeModal(){
- 		this.setState({showModal : false})
- 	}
-
- 	showModal(){
- 		var self = this
- 		self.requestMonsterList()
- 		self.setState({showModal: true})
- 	} 		
-
  	openMonster(id){
  		this.setState({monsterId : id })
  		this.props.setShowMonster(true)
  	}
-r
+
  	tableSetUp(){
  		self = this
  		var tableList = self.state.monsterList.map(function(monster){
  			var name = monster.name
- 			return (<tr key={name + ' row'} onClick={(e)=> self.openMonster(monster.id)} >
+ 			return (<tr className='hover' key={name + ' row'} onClick={(e)=> self.openMonster(monster.id)} >
 		 				<td key={name + ' name'} className='centerText'>{name}</td>
 		 				<td key={name + ' type'} className="centerText">{monster.type}</td>
 		 				<td key={name + ' cr'} className='centerText'>{monster.challenge_rating}</td>
@@ -149,13 +141,13 @@ r
 
  	monsterTable(){
  		return(
- 				<Table key='monsterTable' className='black' striped bordered condensed hover>
+ 				<Table key='monsterTable' bordered condensed hover>
  					<thead key='monsterthead'>
  						<tr>
- 							<th key='namehead'className='black centerText'>Name <Glyphicon glyph={this.state.name ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('name')}  /></th>
- 							<th key='typehead'className='black centerText'>Type <Glyphicon glyph={this.state.type ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('type')}  /></th>
- 							<th key='crhead'className='black centerText'>Challenge Rating <Glyphicon glyph={this.state.challenge_rating ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('challenge_rating')} /></th>
- 							<th key='environmenthead'className='black centerText'>Environment <Glyphicon glyph={this.state.environment ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('environment')}  /></th>
+ 							<th key='namehead'className='centerText'>Name <Glyphicon glyph={this.state.name ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('name')}  /></th>
+ 							<th key='typehead'className='centerText'>Type <Glyphicon glyph={this.state.type ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('type')}  /></th>
+ 							<th key='crhead'className='centerText'>Challenge Rating <Glyphicon glyph={this.state.challenge_rating ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('challenge_rating')} /></th>
+ 							<th key='environmenthead'className='centerText'>Environment <Glyphicon glyph={this.state.environment ? 'chevron-up' : 'minus' } onClick={()=>this.sortList('environment')}  /></th>
 	        			</tr>
  					</thead>
  					<tbody key='monstertbody'>
@@ -164,35 +156,23 @@ r
  				</Table>)
  	}
 
- 	modal(){
- 		return(
- 			<Modal show={this.state.showModal} bsSize = "large" onHide={this.closeModal.bind(this)}>
-	         	<Modal.Header closeButton>
-	            	<Modal.Title className='centertext black'>Monster Diary</Modal.Title>
-	          	</Modal.Header>
-	          	<Modal.Body>
-		 			<Col md={4} mdOffset={4} className = 'centerText'>
-						<Button id='diaryButton' active={this.state.diaryButton} onClick={(e)=> this.switchData(e.target.id)}> Your Diary </Button>
-						<Button id='directoryButton' active={this.state.directoryButton} onClick={(e)=>this.switchData(e.target.id)}> Directory </Button>
-					</Col>
-					<Col md={1} mdOffset={3}>
-						<Button id='addspellButton'><Glyphicon glyph={'plus'} /> </Button>
-					</Col>	
-					<Col md={12}>
-					<br/><br/>
-					{this.monsterTable()}
-					</Col>
-				</Modal.Body>	
-	          	<Modal.Footer bsClass='noLine'><span className = "centerText">end</span></Modal.Footer>
-        	</Modal>				
- 	)}
 
 	render(){
-		return(<span>
-			<Button onClick={this.showModal.bind(this)}>Monster Diary</Button>
-			{this.modal()}
+		return(<Row>
+			<Col md={4} mdOffset={4} className = 'centerText'>
+				<Button id='diaryButton' active={this.state.diaryButton} onClick={(e)=> this.switchData(e.target.id)}> Your Diary </Button>
+				<Button id='directoryButton' active={this.state.directoryButton} onClick={(e)=>this.switchData(e.target.id)}> Directory </Button>
+			</Col>
+			<Col md={1} mdOffset={3}>
+				<Button id='addspellButton'><Glyphicon glyph={'plus'} /> </Button>
+			</Col>	
+			<Col md={12}>
+				<br/><br/>
+				{this.monsterTable()}
+			</Col>
 			{this.props.showMonster ? <MonsterModal monsterId={this.state.monsterId}/> : <br/>}
-			</span>
+
+			</Row>
 			)
 	}
 

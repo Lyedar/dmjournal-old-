@@ -35,9 +35,23 @@ h1.inline, h2.inline, h3.inline, h4.inline, h5.inline {
 	text-decoration: underline;
 }
 
-.scroll{
-	background-color: #b38600;
+
+
+
+tr.hover:hover{
+	color:black;
 }
+
+
+
+.scrollBackground{
+	background-image: url('../images/DarkWood.jpg');
+    background-size: inherit;
+    background-repeat: repeat;
+    color:white;
+}
+
+
 
 
 
@@ -61,6 +75,14 @@ h1.inline, h2.inline, h3.inline, h4.inline, h5.inline {
 .noWidthResize {
 	height: auto;
 	resize:vertical;	
+}
+
+.minHeight{
+	min-height: 100px;
+}	
+
+.wellTransparent{
+	background-color: transparent;
 }
 
 .transparent {

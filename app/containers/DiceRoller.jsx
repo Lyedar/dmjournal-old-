@@ -86,9 +86,9 @@ export default class DiceRoller extends React.Component {
 	render() { 
 
 		return(
-			<span className='black'>
+			<span>
 				
-				<Col md={4} mdOffset={4} className='black'>
+				<Col md={4} mdOffset={4}>
 				<ControlLabel># of Dice</ControlLabel>
 				<FormControl id='amount' componentClass='input' className='black noWidthResize centerText' value={this.state.amount} onChange={(e)=> this.setState({amount : e.target.value})} />
   				</Col>
@@ -119,7 +119,7 @@ export default class DiceRoller extends React.Component {
 				    </FormGroup>
 				</Col>  
 
-			<FormControl id='response' componentClass='textarea' className='black noWidthResize centerText' placeholder='Results' value = {this.state.rolls}/>
+			<FormControl id='response' componentClass='textarea' className='black noWidthResize minHeight centerText' placeholder='Results' value = {this.state.rolls}/>
 			<Button onClick={()=>this.setState({rolls : ''})}>Clear Roll History</Button>
 			</span>		
 			

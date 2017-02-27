@@ -48,6 +48,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-react-hmre": "^1.1.1",
     "babel-preset-stage-0": "^6.5.0",
+    "backdraft-js": "0.0.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
     "classnames": "^2.2.3",
