@@ -1,15 +1,15 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import {Modal, Form, FormGroup, FormControl, ControlLabel, Col, Row, Button, HelpBlock, PanelGroup, Table, Well} from 'react-bootstrap'
-import {addToListAction, deleteFromListAction, addProfileAction, setShowSpell, setSpellActive} from '../redux/actions';
+import {addToListAction, deleteFromListAction, addProfileAction, setShowSpell, setSpellActive} from '../../redux/actions';
 import { Link } from 'react-router';
 import {connect} from 'react-redux';
 import styles from 'css/components/home';
-import requestApi from '../utilities/requests';
+import requestApi from '../../utilities/requests';
 import _ from 'lodash';
 
-import {FieldView, ListField, StatField, SavesView, EquiptmentTextAreaView} from '../components/characterSheetElements'
-import panelBuilder from '../components/panelBuilder'
+import {FieldView, ListField, StatField, SavesView, EquiptmentTextAreaView} from '../../components/characterSheetElements'
+import panelBuilder from '../../components/panelBuilder'
 
 
 function mapStateToProps(state, ownProps){
@@ -38,12 +38,6 @@ function mapDispatchToProps(dispatch, ownProps){
 }
 
 export default class SpellBook extends React.Component {
-	
-	constructor(props){
- 		super(props);
- 		this.state={
- 		};
- 	}
 
  	componentWillMount(){
  		requestApi('api/v1/spell/' + this.props.spellId)()
@@ -55,17 +49,11 @@ export default class SpellBook extends React.Component {
  		})
  	}
 
-
- 	modal(){
- 		var self = this
- 		var spell = this.props.spell
- 		return(
- 			<Modal  show={this.props.spellVisable} bsSize = "large" onHide={()=>self.props.setShowSpell()}>
-	         	<Modal.Header closeButton>
-	            	<Modal.Title className='centerText black'>{spell.name}</Modal.Title>
-	          	</Modal.Header>
-	          	<Modal.Body className='centerText black'>
-	          	<h3 className='centerText'>Level : {spell.level}</h3>
+	render(){
+		var spell = this.props.spell
+		return(
+			<div className='black centerText'>
+				<h3 className='centerText'>Level : {spell.level}</h3>
 	          	<h4 className='centerText'>{spell.ritual ? (<span>Ritual<br/></span>) : (<div/>)}</h4>
 	          		<Row>
 		          		<Col md={12}>
@@ -84,17 +72,7 @@ export default class SpellBook extends React.Component {
 			 				<Well><p>{spell.description}</p></Well>
 			 			</Col>
 			 			<Col md={12}><Button>Cast</Button></Col>
-			 		</Row>	
-				</Modal.Body>	
-	          	<Modal.Footer bsClass='noLine'><span className = "centerText">end</span></Modal.Footer>
-        	</Modal>
-        )	
- 	}
-
-	render(){
-		return(
-			<div>
-				{this.modal()}
+			 		</Row>
 			</div>	
 			)
 	}

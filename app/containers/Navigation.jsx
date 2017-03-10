@@ -113,7 +113,7 @@ class NavigationView extends Component {
 
   render() {
     return (
-      <Navbar className={"navbar-fixed-top"} fluid = {true}>
+      <Navbar inverse className={"navbar-fixed-top"} fluid = {true}>
         <Header>
           <Brand>
             DM Journal

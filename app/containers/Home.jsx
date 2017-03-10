@@ -15,7 +15,7 @@ import CharacterSheet from './CharacterSheet'
 import PanelBuilder from '../components/panelBuilder'
 import CantripBuilder from './CantripBuilder'
 import DiceRoller from './DiceRoller'
-import SpellBook from './SpellBook'
+import SpellBook from './Spells/SpellBook'
 import MonsterDiary from './MonsterDiary'
 import NoteMain from './Notes/NoteMain'
 
@@ -120,42 +120,21 @@ function mapDispatchToProps(dispatch){
 
 	 			{/* Panels of Tools */}	
 	 			<Col md = {3}>	
-
- 				<Row><Col>
- 				<Button onClick={(e) => this.setCurrent(<span><CantripBuilder /></span>)}>Cantrip Builder</Button>
-	 			</Col></Row>
-	 			<Row><Col >
-	 			<Button onClick={(e) => this.setCurrent(<span><DiceRoller /></span>)}>Dice Roller</Button>
-	 			</Col></Row>
-	 			<Row><Col >
-	 			<Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>NPC Generator</h1></span>)}>NPC Generator</Button>
-	 			</Col></Row>	
-	 			<Row><Col >
-	 			<Button onClick={(e) => this.setCurrent(<span><SpellBook /></span>)}>Spell Book</Button>
-	 			</Col></Row>
-	 			<Row><Col >
-	 			<Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>Loot Generator</h1></span>)}>Loot Generator</Button>
-	 			</Col></Row>
-	 			<Row><Col >
-	 			<Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>Encounters</h1></span>)}>Encounters</Button>
-	 			</Col></Row>
-	 			<Row><Col >
-	 			<Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>Sound Board</h1></span>)}>Sound Board</Button>
-	 			</Col></Row>
-	 			<Row><Col >
-	 			<Button onClick={(e) => this.setCurrent(<span><NoteMain defaultText='Hello this is a text'/></span>)}>NotePad</Button>
-	 			</Col></Row>
-	 			<Row><Col >
-	 			<Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>RANDOM INFO</h1></span>)}>Dm Screen</Button>
-	 			</Col></Row>
-	 			<Row><Col >
-	 			<Button onClick={(e) => this.setCurrent(<span><MonsterDiary /></span>)}>Monster Diary</Button>
-	 			</Col></Row>
-
+	 			<Well bsSize='large' className='darkWoodBackground' >
+	 				<Row><Button onClick={(e) => this.setCurrent(<span><CantripBuilder /></span>)}>Cantrip Builder</Button></Row>
+		 			<Row><Button onClick={(e) => this.setCurrent(<span><DiceRoller /></span>)}>Dice Roller</Button></Row>
+		 			<Row><Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>NPC Generator</h1></span>)}>NPC Generator</Button></Row>	
+		 			<Row><Button onClick={(e) => this.setCurrent(<span><SpellBook /></span>)}>Spell Book</Button></Row>
+		 			<Row><Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>Loot Generator</h1></span>)}>Loot Generator</Button></Row>
+		 			<Row><Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>Encounters</h1></span>)}>Encounters</Button></Row>
+		 			<Row><Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>Sound Board</h1></span>)}>Sound Board</Button></Row>
+		 			<Row><Button onClick={(e) => this.setCurrent(<span><NoteMain defaultText='Hello this is a text'/></span>)}>NotePad</Button></Row>
+		 			<Row><Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>RANDOM INFO</h1></span>)}>Dm Screen</Button></Row>
+		 			<Row><Button onClick={(e) => this.setCurrent(<span><MonsterDiary /></span>)}>Monster Diary</Button></Row>
+		 		</Well>
 	 			</Col>
-	 			
 	 			<Col md={9}>
-	 				<Well bsSize='lg' className='scrollBackground'>{this.state.current}</Well>
+	 				<Well bsSize='lg' className='darkWoodBackground'>{this.state.current}</Well>
     			</Col>
  			</div>
 

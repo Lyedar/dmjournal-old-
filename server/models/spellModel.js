@@ -18,7 +18,8 @@ var spellSchema = new Schema({
     "raw": String
   },
   "duration": String,
-  "description": String
+  "description": String,
+  "owner":String
 })
 
 var Spell = mongoose.model('Spell', spellSchema);

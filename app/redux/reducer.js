@@ -6,16 +6,30 @@ import Immutable from 'immutable'
 function tavernReducer(previousState, action){
 	const name = previousState.get('currentUser')
 	switch(action.type){
+
+		//Spell Cases
 		case 'SET_SPELL':
 			return previousState.set('spellSelected', action.spell)
 		case 'SHOW_SPELL':
 			return previousState.set('showSpell', !previousState.get('showSpell'))	
+		case 'CREATE_SPELL':
+			return previousState.setIn(['createSpell', 'show'], action.toggle)
+		//Monster Cases	
 		case 'SET_MONSTER':
 			return previousState.set('monsterSelected', action.monster)
 		case 'SHOW_MONSTER':
 			return previousState.set('showMonster', !previousState.get('showMonster'))
-
-
+		//MODAL SETTINGS	
+		case 'SET_SHOWMODAL':
+			return previousState.setIn(['modal', 'showModal'], action.toggle)
+		case 'SET_MODALBODY':
+			return previousState.setIn(['modal', 'mBody'], action.mBody)
+		case 'SET_MODALHEAD':
+			return previousState.setIn(['modal', 'mHead'], action.mHead)
+		case 'SET_MODALFOOTER':
+			return previousState.setIn(['modal', 'mFooter'], action.mFooter)
+		case 'SET_MODALFULL':
+			return previousState.set('modal', action.modalFull)	
 
 
 

@@ -1,16 +1,18 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import {Modal, Form, FormGroup, FormControl, ControlLabel, Col, Row, Button, HelpBlock, PanelGroup, Table, Glyphicon} from 'react-bootstrap'
-import {addToListAction, deleteFromListAction, addProfileAction, setSpellActive, setShowSpell} from '../redux/actions';
+import {addToListAction, deleteFromListAction, addProfileAction, setSpellActive, setShowSpell, setShowModal, setModalBody, setModalHead} from '../../redux/actions';
 import { Link } from 'react-router';
 import {connect} from 'react-redux';
 import styles from 'css/components/home';
-import requestApi from '../utilities/requests';
+import requestApi from '../../utilities/requests';
 import _ from 'lodash';
 
-import {FieldView, ListField, StatField, SavesView, EquiptmentTextAreaView} from '../components/characterSheetElements'
-import panelBuilder from '../components/panelBuilder'
+import {FieldView, ListField, StatField, SavesView, EquiptmentTextAreaView} from '../../components/characterSheetElements'
+import panelBuilder from '../../components/panelBuilder'
+import ModalBuilder from '../../components/modalBuilder'
 import SpellModal from './SpellModal'
+import SpellCreator from './SpellCreator'
 
 
 function mapStateToProps(state, ownProps){
@@ -18,6 +20,7 @@ function mapStateToProps(state, ownProps){
 	var userName = ownProps.userName || currentUser
   	return {
   		showSpell : state.get('showSpell'),
+  		showModal: state.getIn(['modal', 'showModal']),
 	    userName,
 	    profiles : state.get('profiles').toJS(),
 	    userProfile: state.getIn(['profiles', userName]),
@@ -28,8 +31,11 @@ function mapStateToProps(state, ownProps){
 
 function mapDispatchToProps(dispatch, ownProps){
   return {
-  	setSpell: (spell) => dispatch(setSpellActive(spell)),
-  	setShowSpell: (toggle) => dispatch(setShowSpell(toggle)),
+  	setSpell: (spell) => dispatch(setSpellActive(spell)), // set current spell
+  	setShowSpell: (toggle) => dispatch(setShowSpell(toggle)), //
+  	setModalHead: (mh) => dispatch(setModalHead(mh)),
+  	setModalBody: (mb) => dispatch(setModalBody(mb)),
+  	setShowModal: (toggle) => dispatch(setShowModal(toggle)),
 
   	addProfile: (profile) => dispatch(addProfileAction(profile)),
   	addPartyMember: (member) => dispatch(addToListAction(member)), 
@@ -49,6 +55,7 @@ export default class SpellBook extends React.Component {
  			spellList: [],
  			spellTab: [],
  			showSpell: false,
+ 			showCreateSpell: false,
  			name: true,
  			level: false,
  			school: false,
@@ -85,16 +92,23 @@ export default class SpellBook extends React.Component {
 
  	
 
- 	openSpell(id){
- 		this.setState({spellId : id })
- 		this.props.setShowSpell(true)
+ 	openSpell(id, name){
+ 		this.props.setModalHead(<div className='black centerText'>{name}</div>);
+ 		this.props.setModalBody(<SpellModal spellId={id} />);
+ 		this.props.setShowModal(true)
+ 	}
+ 	openSpellCreate(){
+ 		console.log('Create Spell should be true');
+ 		this.props.setModalHead('Spell Creator');
+ 		this.props.setModalBody(<SpellCreator />);
+ 		this.props.setShowModal(true)
  	}
 
  	tableSetUp(){
  		self = this
  		var tableList = self.state.spellList.map(function(spell){
  			var name = spell.name
- 			return (<tr className='hover' key={name + ' row'} onClick={(e)=> self.openSpell(spell.id)}>
+ 			return (<tr className='hover' key={name + ' row'} onClick={(e)=> self.openSpell(spell.id, name)}>
 		 				<td key={name + ' level'} className='centerText'>{spell.level}</td>
 		 				<td key={name + ' name'} className='centerText'>{name}</td>
 		 				<td key={name + ' school'} className='centerText'>{spell.school}</td>
@@ -166,13 +180,13 @@ export default class SpellBook extends React.Component {
 				<Button id='directoryButton' active={this.state.directoryButton} onClick={(e)=>this.switchData(e.target.id)}> Directory </Button>
 				</Col>
 				<Col md={1} mdOffset={3}>
-					<Button id='addspellButton'><Glyphicon glyph={'plus'} /> </Button>
+					<Button id='addspellButton' onClick={(e)=> this.openSpellCreate()}><Glyphicon glyph={'plus'}/> </Button>
 				</Col>	
 				<Col md={12}>
 				<br/><br/>
 			{this.spellTable()}
 			</Col>
-			{this.props.showSpell ? <SpellModal spellId={this.state.spellId}/> : <br/>}
+			<ModalBuilder /> 
 			</Row>
 			)
 	}

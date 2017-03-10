@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 import requestApi from '../../utilities/requests'
 import {Editor, EditorState, convertFromHTML, ContentState, convertToRaw, RichUtils} from 'draft-js';
 import backdraft from 'backDraft-js'
-import markUp from '../../constants/draftConstants'
+import draftConstants from '../../constants/draftConstants'
 
 
 function mapStateToProps(state){
@@ -76,8 +76,8 @@ constructor(props){
 	saveData(){
 		const contentState = this.state.editorState.getCurrentContent();	
 		var rawDraftContentBlock = convertToRaw(contentState);
-		var markedUpBlocks = backdraft(rawDraftContentBlock, markUp);
-		console.log('marked up blocks == ' + markedUpBlocks)
+		var markedUpBlocks = backdraft(rawDraftContentBlock, draftConstants.MARKUP);
+		console.log('marked up blocks == ' + markedUpBlocks);
 
 	}
 

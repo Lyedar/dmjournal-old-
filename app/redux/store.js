@@ -6,10 +6,20 @@ import Immutable from 'immutable'
 var initialState = Immutable.fromJS({
 
 	spellSelected : {},
-	showSpell : false,
+	createSpell: {
+			show: false,
+			spell: {}	
+	}, 
 
 	monsterSelected : {},
 	showMonster : false,
+
+	modal:{
+		showModal:false,
+		mBody: '',
+		mHead:'',
+		mFooter:''
+	},
 
 	loggedIn: false,
 	errorMessage: false,

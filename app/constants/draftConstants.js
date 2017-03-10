@@ -1,6 +1,6 @@
 
 
-const markUp = {
+const MARKUP = {
 		    'BOLD': ['<strong>', '</strong>'],
 		    'ITALIC': ['<em>', '</em>'],
 		    'UNDERLINE': ['<u>', '</u>'],
@@ -9,5 +9,5 @@ const markUp = {
 
 		
 module.exports = {
-	markUp
+	MARKUP
 };

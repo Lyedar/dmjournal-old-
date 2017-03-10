@@ -1,6 +1,6 @@
 
 
-
+//Spell Functions
 function setSpellActive(spell){
 	return{
 		type: 'SET_SPELL',
@@ -14,6 +14,14 @@ function setShowSpell(toggle, id){
 	}
 }
 
+function setCreateSpell(toggle){
+	return{
+		type: 'CREATE_SPELL',
+		toggle: toggle
+	}
+}
+
+//Monster Functions
 function setMonsterActive(monster){
 	return{
 		type: 'SET_MONSTER',
@@ -27,7 +35,38 @@ function setShowMonster(toggle, id){
 	}
 }
 
+//MODAL ACTIONS
+function setShowModal(toggle){
+	return{
+		type: 'SET_SHOWMODAL',
+		toggle
+	}
+}
+function setModalBody(mBody){
+	return{
+		type: 'SET_MODALBODY',
+		mBody
+	}
+}
+function setModalHead(mHead){
+	return{
+		type: 'SET_MODALHEAD',
+		mHead
+	}
+}
+function setModalFooter(mFooter){
+	return{
+		type: 'SET_MODALFOOTER',
+		mFooter
+	}
+}
 
+function setModalFull(modalFull){
+	return{
+		type: 'SET_MODALFULL',
+		modalFull
+	}
+}
 
 //USER/LOGIN ACTIONS
 function setCurrentUserAction(user){
@@ -179,9 +218,15 @@ function setErrorMessageAction(message){
 module.exports = {
 	setSpellActive,
 	setShowSpell,
+	setCreateSpell,
 	setMonsterActive,
 	setShowMonster,
 
+	setShowModal,
+	setModalBody,
+	setModalHead,
+	setModalFooter,
+	setModalFull,
 
 	toggleLoginAction,
 	loginTrueAction,
