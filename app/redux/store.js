@@ -10,21 +10,17 @@ var initialState = Immutable.fromJS({
 			show: false,
 			spell: {}	
 	}, 
-
 	monsterSelected : {},
 	showMonster : false,
-
 	modal:{
 		showModal:false,
 		mBody: '',
 		mHead:'',
 		mFooter:''
 	},
-
 	loggedIn: false,
 	errorMessage: false,
 	profiles: {},
-	currentUser : false,
 	profileUserName: false,
 	edit: false,
 	search: {
@@ -34,7 +30,7 @@ var initialState = Immutable.fromJS({
 	},
 	results: {},
 	suggestions: false,
-	userName: '',
+	userName: 'Lyedar',
 	email: '',
 	password: '',
 	confirmPassword: ''

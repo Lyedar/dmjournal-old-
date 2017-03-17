@@ -38,13 +38,13 @@ function mapDispatchToProps(dispatch, ownProps){
   	setShowModal: (toggle) => dispatch(setShowModal(toggle)),
 
   	addProfile: (profile) => dispatch(addProfileAction(profile)),
-  	addPartyMember: (member) => dispatch(addToListAction(member)), 
+  	addPartyMember: (member) => dispatch(addToListAction(member)),
   	deletePartyMember: (member) => dispatch(deleteFromListAction(member))
   }
 }
 
 export default class SpellBook extends React.Component {
-	
+
 	constructor(props){
  		super(props);
  		this.state={
@@ -78,7 +78,7 @@ export default class SpellBook extends React.Component {
  				this.setState({spellsList: ['nothing']})
  			}
  		})
- 		
+
  	}
 
  	switchData(id){
@@ -90,7 +90,6 @@ export default class SpellBook extends React.Component {
  		}
  	}
 
- 	
 
  	openSpell(id, name){
  		this.props.setModalHead(<div className='black centerText'>{name}</div>);
@@ -99,7 +98,7 @@ export default class SpellBook extends React.Component {
  	}
  	openSpellCreate(){
  		console.log('Create Spell should be true');
- 		this.props.setModalHead('Spell Creator');
+ 		this.props.setModalHead(<span className='black centerText'>Spell Creator</span>);
  		this.props.setModalBody(<SpellCreator />);
  		this.props.setShowModal(true)
  	}
@@ -118,7 +117,7 @@ export default class SpellBook extends React.Component {
  	}
 
  	sortList(value){
- 		var obj = {}
+ 	 	var obj = {}
  		var list = this.state.spellList
  		obj.name = false;
  		obj.level = false;
@@ -141,7 +140,7 @@ export default class SpellBook extends React.Component {
 				if (textA < textB) return -1;
   				if (textA > textB) return 1;
 				return 0;
-			})	
+			})
 		} else {
 			list.sort(function(a,b){
 				var crA = eval(a.level === 'cantrip' ? '0' : a.level)
@@ -181,12 +180,12 @@ export default class SpellBook extends React.Component {
 				</Col>
 				<Col md={1} mdOffset={3}>
 					<Button id='addspellButton' onClick={(e)=> this.openSpellCreate()}><Glyphicon glyph={'plus'}/> </Button>
-				</Col>	
+				</Col>
 				<Col md={12}>
 				<br/><br/>
 			{this.spellTable()}
 			</Col>
-			<ModalBuilder /> 
+			<ModalBuilder />
 			</Row>
 			)
 	}

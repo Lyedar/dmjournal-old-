@@ -25,16 +25,12 @@ import dndDefaults from '../../constants/dndDefaults'
 
 
 function mapStateToProps(state, ownProps){
-	var currentUser = state.get('currentUser')
-	var userName = ownProps.userName || currentUser
   	return {
   		showCreate: state.getIn(['createSpell', 'show']),
   		spell: state.get('spellSelected'),
-	    userName,
+	    userName: state.get('userName'),
 	    profiles : state.get('profiles').toJS(),
-	    userProfile: state.getIn(['profiles', userName]),
-	    edit : state.get('edit'),
-	    party: _.get(state.get('profiles').toJS(),`${userName}.party`, [])
+	    edit : state.get('edit')
 	}
 }
 
@@ -54,7 +50,19 @@ export default class SpellCreator extends React.Component {
 	
 	constructor(props){
  		super(props);
- 		this.state={};
+ 		this.state={
+ 			spellName: '',
+ 			spellDesc: '',
+ 			spellCT: '',
+ 			spellClasses: '',
+ 			spellSomatic: '',
+ 			spellVerbal: '',
+ 			spellRitual: '',
+ 			spellDuration: '',
+ 			spellRange: '',
+ 			spellSchool: '',
+ 			spellCreator: this.props.userName,
+ 		};
  	}
 
  	classSelector(){
@@ -65,47 +73,63 @@ export default class SpellCreator extends React.Component {
  		return newClasses;
  	}
 
+ 	onClassChange(e){
+	 	var options = e.target.options;
+		var value = [];
+	 	for (var i = 0, l = options.length; i < l; i++) {
+	   		if (options[i].selected) {
+	      		value.push(options[i].value);
+	   		}
+	  	}
+	  	this.setState({spellClasses : value})
+	}  	
+
+
+	submitButton(){
+		console.log(this.state);
+	}
+
 	render(){
 		return(
-				<div className='centerText black'>
- 					<FormControl componentClass="input" placeholder='Spell Name' />	          				
-	         		<FormControl componentClass='textarea' placeholder='Spell Description'/>
-	          		<FormControl componentClass='input' placeholder='Casting Time'/>
-          				<Row>
-          					<Col md={4}>
-          						<FormControl componentClass="select" multiple> {this.classSelector()} </FormControl>
-          					</Col>
-          					<Col  md={4} />
-          					<Col md={4}>
-		          				<FormGroup>
-							      <InputGroup>
-							        <InputGroup.Addon>
-							          <input type="radio" aria-label="..." />
-							        </InputGroup.Addon>
-							        <FormControl type="text" placeholder="Materals Needed"/>
-							      </InputGroup>
-							    </FormGroup>
-		          				
-		          				<h5><input type="radio" label='somatic' />Somatic</h5>
-		          				<h5><input type="radio" label='verbal' />Verbal</h5>
-		          				<h5><input type="radio" label='ritual' />Ritual</h5>
-	          				</Col>
-          				</Row>
-          				<FormControl componentClass='input' placeholder='duration' />
-          				<FormControl componentClass='input' placeholder='range' />
-          				<FormControl componentClass="select">
-	        				<option value={0}>School of Magic</option>
-	        				<option value={'abjuration'}>Abjuration</option>
-	        				<option value={'conjuration'}>Conjuration</option>
-	        				<option value={'divination'}>Divination</option>
-	        				<option value={'enchantment'}>Enchantment</option>
-	        				<option value={'evocation'}>Evocation</option>
-	        				<option value={'illusion'}>Illusion</option>
-	        				<option value={'necromancy'}>Necromancy</option>
-	        				<option value={'transmutation'}>Transmutation</option>	        			
-	      				</FormControl>
-	      				<Button >Submit</Button>
-	      			</div>
+			<div className='centerText black'>
+					<FormControl onChange={(e) => this.setState({ spellName :e.target.value})} componentClass="input" placeholder='Spell Name' />	          				
+         		<FormControl onChange={(e) => this.setState({ spellDesc:e.target.value})} className= 'noWidthResize ' componentClass='textarea' placeholder='Spell Description'/>
+          		<FormControl onChange={(e) => this.setState({ spellCT:e.target.value})} componentClass='input' placeholder='Casting Time'/>
+      				<Row>
+      					<Col md={4}>
+      						<FormControl onChange={(e)=> this.onClassChange(e) } componentClass="select" multiple> {this.classSelector()} </FormControl>
+      					</Col>
+      					<Col  md={4} />
+      					<Col md={4}>
+	          				<FormGroup>
+						      <InputGroup>
+						        <InputGroup.Addon>
+						          <input type="radio" value = {this.state.spellMaterials} />
+						        </InputGroup.Addon>
+						        <FormControl type="text" placeholder="Materials Needed"/>
+						      </InputGroup>
+						    </FormGroup>
+	          				
+	          				<h5><input type="radio" label='somatic' checked={this.state.spellSomatic} onClick={(e)=> this.setState({spellSomatic : !this.state.spellSomatic})}/>Somatic</h5>
+	          				<h5><input type="radio" label='verbal' checked={this.state.spellVerbal} onClick={(e)=> this.setState({spellVerbal : !this.state.spellVerbal})} />Verbal</h5>
+	          				<h5><input type="radio" label='ritual' checked={this.state.spellRitual} onClick={(e)=> this.setState({spellRitual : !this.state.spellRitual})} />Ritual</h5>
+          				</Col>
+      				</Row>
+      				<FormControl onChange={(e) => this.setState({ spellDuration :e.target.value})} componentClass='input' placeholder='duration' />
+      				<FormControl onChange={(e) => this.setState({ spellRange :e.target.value})}componentClass='input' placeholder='range' />
+      				<FormControl onChange={(e) => this.setState({ spellSchool :e.target.value})}componentClass="select">
+        				<option value={0}>School of Magic</option>
+        				<option value={'abjuration'}>Abjuration</option>
+        				<option value={'conjuration'}>Conjuration</option>
+        				<option value={'divination'}>Divination</option>
+        				<option value={'enchantment'}>Enchantment</option>
+        				<option value={'evocation'}>Evocation</option>
+        				<option value={'illusion'}>Illusion</option>
+        				<option value={'necromancy'}>Necromancy</option>
+        				<option value={'transmutation'}>Transmutation</option>	        			
+      				</FormControl>
+      				<Button onClick={(e)=>this.submitButton()} >Submit</Button>
+      			</div>
 			)
 	}
 

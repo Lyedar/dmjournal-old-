@@ -15,6 +15,7 @@ var spellSchema = new Schema({
     "verbal": Boolean,
     "somatic": Boolean,
     "material": Boolean,
+    "materials_needed": [String],
     "raw": String
   },
   "duration": String,

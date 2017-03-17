@@ -88737,7 +88737,11 @@ module.exports =
 	    key: 'openSpellCreate',
 	    value: function openSpellCreate() {
 	      console.log('Create Spell should be true');
-	      this.props.setModalHead('Spell Creator');
+	      this.props.setModalHead(_react2.default.createElement(
+	        'span',
+	        { className: 'black centerText' },
+	        'Spell Creator'
+	      ));
 	      this.props.setModalBody(_react2.default.createElement(_SpellCreator2.default, null));
 	      this.props.setShowModal(true);
 	    }
@@ -89086,8 +89090,6 @@ module.exports =
 			spellVisable: state.get('showSpell'),
 			spell: state.get('spellSelected'),
 			userName: userName,
-			profiles: state.get('profiles').toJS(),
-			userProfile: state.getIn(['profiles', userName]),
 			edit: state.get('edit'),
 			party: _lodash2.default.get(state.get('profiles').toJS(), userName + '.party', [])
 		};
@@ -89248,7 +89250,7 @@ module.exports =
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -89304,192 +89306,241 @@ module.exports =
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	function mapStateToProps(state, ownProps) {
-		var currentUser = state.get('currentUser');
-		var userName = ownProps.userName || currentUser;
-		return {
-			showCreate: state.getIn(['createSpell', 'show']),
-			spell: state.get('spellSelected'),
-			userName: userName,
-			profiles: state.get('profiles').toJS(),
-			userProfile: state.getIn(['profiles', userName]),
-			edit: state.get('edit'),
-			party: _lodash2.default.get(state.get('profiles').toJS(), userName + '.party', [])
-		};
+	  return {
+	    showCreate: state.getIn(['createSpell', 'show']),
+	    spell: state.get('spellSelected'),
+	    userName: state.get('userName'),
+	    profiles: state.get('profiles').toJS(),
+	    edit: state.get('edit')
+	  };
 	}
 
 	function mapDispatchToProps(dispatch, ownProps) {
-		return {
-			setModalHead: function setModalHead(mh) {
-				return dispatch((0, _actions.setModalHead)(mh));
-			},
-			setModalBody: function setModalBody(mb) {
-				return dispatch((0, _actions.setModalBody)(mb));
-			},
-			setShowModal: function setShowModal(toggle) {
-				return dispatch((0, _actions.setShowModal)(toggle));
-			},
+	  return {
+	    setModalHead: function setModalHead(mh) {
+	      return dispatch((0, _actions.setModalHead)(mh));
+	    },
+	    setModalBody: function setModalBody(mb) {
+	      return dispatch((0, _actions.setModalBody)(mb));
+	    },
+	    setShowModal: function setShowModal(toggle) {
+	      return dispatch((0, _actions.setShowModal)(toggle));
+	    },
 
-			addProfile: function addProfile(profile) {
-				return dispatch((0, _actions.addProfileAction)(profile));
-			},
-			addPartyMember: function addPartyMember(member) {
-				return dispatch((0, _actions.addToListAction)(member));
-			},
-			deletePartyMember: function deletePartyMember(member) {
-				return dispatch((0, _actions.deleteFromListAction)(member));
-			}
-		};
+	    addProfile: function addProfile(profile) {
+	      return dispatch((0, _actions.addProfileAction)(profile));
+	    },
+	    addPartyMember: function addPartyMember(member) {
+	      return dispatch((0, _actions.addToListAction)(member));
+	    },
+	    deletePartyMember: function deletePartyMember(member) {
+	      return dispatch((0, _actions.deleteFromListAction)(member));
+	    }
+	  };
 	}
 
 	var SpellCreator = function (_React$Component) {
-		_inherits(SpellCreator, _React$Component);
+	  _inherits(SpellCreator, _React$Component);
 
-		function SpellCreator(props) {
-			_classCallCheck(this, SpellCreator);
+	  function SpellCreator(props) {
+	    _classCallCheck(this, SpellCreator);
 
-			var _this = _possibleConstructorReturn(this, (SpellCreator.__proto__ || Object.getPrototypeOf(SpellCreator)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (SpellCreator.__proto__ || Object.getPrototypeOf(SpellCreator)).call(this, props));
 
-			_this.state = {};
-			return _this;
-		}
+	    _this.state = {
+	      spellName: '',
+	      spellDesc: '',
+	      spellCT: '',
+	      spellClasses: '',
+	      spellSomatic: '',
+	      spellVerbal: '',
+	      spellRitual: '',
+	      spellDuration: '',
+	      spellRange: '',
+	      spellSchool: '',
+	      spellCreator: _this.props.userName
+	    };
+	    return _this;
+	  }
 
-		_createClass(SpellCreator, [{
-			key: 'classSelector',
-			value: function classSelector() {
-				var classes = _dndDefaults2.default.CLASSES; //+ DM's custom classes if any
-				var newClasses = classes.map(function (curr) {
-					return _react2.default.createElement(
-						'option',
-						{ value: curr, key: curr },
-						' ',
-						curr,
-						' '
-					);
-				});
-				return newClasses;
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(
-					'div',
-					{ className: 'centerText black' },
-					_react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'input', placeholder: 'Spell Name' }),
-					_react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'textarea', placeholder: 'Spell Description' }),
-					_react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'input', placeholder: 'Casting Time' }),
-					_react2.default.createElement(
-						_reactBootstrap.Row,
-						null,
-						_react2.default.createElement(
-							_reactBootstrap.Col,
-							{ md: 4 },
-							_react2.default.createElement(
-								_reactBootstrap.FormControl,
-								{ componentClass: 'select', multiple: true },
-								' ',
-								this.classSelector(),
-								' '
-							)
-						),
-						_react2.default.createElement(_reactBootstrap.Col, { md: 4 }),
-						_react2.default.createElement(
-							_reactBootstrap.Col,
-							{ md: 4 },
-							_react2.default.createElement(
-								_reactBootstrap.FormGroup,
-								null,
-								_react2.default.createElement(
-									_reactBootstrap.InputGroup,
-									null,
-									_react2.default.createElement(
-										_reactBootstrap.InputGroup.Addon,
-										null,
-										_react2.default.createElement('input', { type: 'radio', 'aria-label': '...' })
-									),
-									_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Materals Needed' })
-								)
-							),
-							_react2.default.createElement(
-								'h5',
-								null,
-								_react2.default.createElement('input', { type: 'radio', label: 'somatic' }),
-								'Somatic'
-							),
-							_react2.default.createElement(
-								'h5',
-								null,
-								_react2.default.createElement('input', { type: 'radio', label: 'verbal' }),
-								'Verbal'
-							),
-							_react2.default.createElement(
-								'h5',
-								null,
-								_react2.default.createElement('input', { type: 'radio', label: 'ritual' }),
-								'Ritual'
-							)
-						)
-					),
-					_react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'input', placeholder: 'duration' }),
-					_react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'input', placeholder: 'range' }),
-					_react2.default.createElement(
-						_reactBootstrap.FormControl,
-						{ componentClass: 'select' },
-						_react2.default.createElement(
-							'option',
-							{ value: 0 },
-							'School of Magic'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'abjuration' },
-							'Abjuration'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'conjuration' },
-							'Conjuration'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'divination' },
-							'Divination'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'enchantment' },
-							'Enchantment'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'evocation' },
-							'Evocation'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'illusion' },
-							'Illusion'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'necromancy' },
-							'Necromancy'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'transmutation' },
-							'Transmutation'
-						)
-					),
-					_react2.default.createElement(
-						_reactBootstrap.Button,
-						null,
-						'Submit'
-					)
-				);
-			}
-		}]);
+	  _createClass(SpellCreator, [{
+	    key: 'classSelector',
+	    value: function classSelector() {
+	      var classes = _dndDefaults2.default.CLASSES; //+ DM's custom classes if any
+	      var newClasses = classes.map(function (curr) {
+	        return _react2.default.createElement(
+	          'option',
+	          { value: curr, key: curr },
+	          ' ',
+	          curr,
+	          ' '
+	        );
+	      });
+	      return newClasses;
+	    }
+	  }, {
+	    key: 'onClassChange',
+	    value: function onClassChange(e) {
+	      var options = e.target.options;
+	      var value = [];
+	      for (var i = 0, l = options.length; i < l; i++) {
+	        if (options[i].selected) {
+	          value.push(options[i].value);
+	        }
+	      }
+	      this.setState({ spellClasses: value });
+	    }
+	  }, {
+	    key: 'submitButton',
+	    value: function submitButton() {
+	      console.log(this.state);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
 
-		return SpellCreator;
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'centerText black' },
+	        _react2.default.createElement(_reactBootstrap.FormControl, { onChange: function onChange(e) {
+	            return _this2.setState({ spellName: e.target.value });
+	          }, componentClass: 'input', placeholder: 'Spell Name' }),
+	        _react2.default.createElement(_reactBootstrap.FormControl, { onChange: function onChange(e) {
+	            return _this2.setState({ spellDesc: e.target.value });
+	          }, className: 'noWidthResize ', componentClass: 'textarea', placeholder: 'Spell Description' }),
+	        _react2.default.createElement(_reactBootstrap.FormControl, { onChange: function onChange(e) {
+	            return _this2.setState({ spellCT: e.target.value });
+	          }, componentClass: 'input', placeholder: 'Casting Time' }),
+	        _react2.default.createElement(
+	          _reactBootstrap.Row,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { md: 4 },
+	            _react2.default.createElement(
+	              _reactBootstrap.FormControl,
+	              { onChange: function onChange(e) {
+	                  return _this2.onClassChange(e);
+	                }, componentClass: 'select', multiple: true },
+	              ' ',
+	              this.classSelector(),
+	              ' '
+	            )
+	          ),
+	          _react2.default.createElement(_reactBootstrap.Col, { md: 4 }),
+	          _react2.default.createElement(
+	            _reactBootstrap.Col,
+	            { md: 4 },
+	            _react2.default.createElement(
+	              _reactBootstrap.FormGroup,
+	              null,
+	              _react2.default.createElement(
+	                _reactBootstrap.InputGroup,
+	                null,
+	                _react2.default.createElement(
+	                  _reactBootstrap.InputGroup.Addon,
+	                  null,
+	                  _react2.default.createElement('input', { type: 'radio', value: this.state.spellMaterials })
+	                ),
+	                _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Materials Needed' })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'h5',
+	              null,
+	              _react2.default.createElement('input', { type: 'radio', label: 'somatic', checked: this.state.spellSomatic, onClick: function onClick(e) {
+	                  return _this2.setState({ spellSomatic: !_this2.state.spellSomatic });
+	                } }),
+	              'Somatic'
+	            ),
+	            _react2.default.createElement(
+	              'h5',
+	              null,
+	              _react2.default.createElement('input', { type: 'radio', label: 'verbal', checked: this.state.spellVerbal, onClick: function onClick(e) {
+	                  return _this2.setState({ spellVerbal: !_this2.state.spellVerbal });
+	                } }),
+	              'Verbal'
+	            ),
+	            _react2.default.createElement(
+	              'h5',
+	              null,
+	              _react2.default.createElement('input', { type: 'radio', label: 'ritual', checked: this.state.spellRitual, onClick: function onClick(e) {
+	                  return _this2.setState({ spellRitual: !_this2.state.spellRitual });
+	                } }),
+	              'Ritual'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(_reactBootstrap.FormControl, { onChange: function onChange(e) {
+	            return _this2.setState({ spellDuration: e.target.value });
+	          }, componentClass: 'input', placeholder: 'duration' }),
+	        _react2.default.createElement(_reactBootstrap.FormControl, { onChange: function onChange(e) {
+	            return _this2.setState({ spellRange: e.target.value });
+	          }, componentClass: 'input', placeholder: 'range' }),
+	        _react2.default.createElement(
+	          _reactBootstrap.FormControl,
+	          { onChange: function onChange(e) {
+	              return _this2.setState({ spellSchool: e.target.value });
+	            }, componentClass: 'select' },
+	          _react2.default.createElement(
+	            'option',
+	            { value: 0 },
+	            'School of Magic'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'abjuration' },
+	            'Abjuration'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'conjuration' },
+	            'Conjuration'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'divination' },
+	            'Divination'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'enchantment' },
+	            'Enchantment'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'evocation' },
+	            'Evocation'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'illusion' },
+	            'Illusion'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'necromancy' },
+	            'Necromancy'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: 'transmutation' },
+	            'Transmutation'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Button,
+	          { onClick: function onClick(e) {
+	              return _this2.submitButton();
+	            } },
+	          'Submit'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return SpellCreator;
 	}(_react2.default.Component);
 
 	exports.default = SpellCreator;

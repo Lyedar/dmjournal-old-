@@ -19,8 +19,6 @@ function mapStateToProps(state, ownProps){
   		spellVisable: state.get('showSpell'),
   		spell: state.get('spellSelected'),
 	    userName,
-	    profiles : state.get('profiles').toJS(),
-	    userProfile: state.getIn(['profiles', userName]),
 	    edit : state.get('edit'),
 	    party: _.get(state.get('profiles').toJS(),`${userName}.party`, [])
 	}
