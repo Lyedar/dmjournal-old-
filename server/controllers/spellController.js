@@ -18,7 +18,8 @@ function allName(req, res){
 					name : spell.name,
 					classes : spell.classes,
 					level : spell.level,
-					school : spell.school}
+					school : spell.school,
+					creator : spell.creator}
 		})
 		res.writeHead(200, {"Content-Type": "text/json"})
 		res.end(JSON.stringify(spells))
@@ -26,11 +27,30 @@ function allName(req, res){
 }
 
 function createSpell(req, res){
-	console.log("Request to create spell")
-	Spell.create(req.body, function(err, spell){
+	var components = {
+		verbal: req.body.spellVerbal,
+		somatic: req.body.spellSomatic,
+		material: req.body.materialsCheck,
+		materials_needed: req.body.spellMaterials
+	}
+
+	var spell ={
+		name : req.body.spellName,
+		description: req.body.spellDesc,
+		level: req.body.spellLevel,
+		school: req.body.spellSchool,
+		casting_time: req.body.spellCT,
+		ritual: req.body.spellRitual,
+		range: req.body.spellRange,
+		duration: req.body.spellDuration,
+		classes: req.body.spellClasses,
+		creator: req.body.spellCreator,
+		components: components
+	}
+	Spell.create(spell, function(err, spell){
 		if(err) return console.log(err);
 		res.writeHead(200, {"Content-Type": "text/json"})
-		res.end(JSON.stringify(spell))
+		res.end(JSON.stringify({success: true}))
 	})
 }
 
@@ -44,7 +64,7 @@ function updateOneSpell(req, res) {
 }
 
 
-module.exports = { 
+module.exports = {
 	retrieveOne,
 	allName,
 	createSpell,
@@ -68,7 +88,3 @@ module.exports = {
 // 		res.end(JSON.stringify(profile))
 // 	})
 // }
-
-
-
-

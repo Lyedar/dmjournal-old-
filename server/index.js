@@ -25,7 +25,7 @@ db.once('open', function(){
 	if (isDev) {
 		var config = require('../webpack/webpack.config.dev-client.js');
 		var compiler = webpack(config);
-		
+
 		app.use(require('webpack-dev-middleware')(compiler, {
 			noInfo: true,
 			publicPath: config.output.publicPath

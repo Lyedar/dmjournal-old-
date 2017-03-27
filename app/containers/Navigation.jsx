@@ -23,10 +23,10 @@ function mapStateToProps(state, ownProps){
 
 function mapDispatchToProps(dispatch, ownProps){
   return {
-    setCurrentUser : (user) => dispatch(setCurrentUserAction(user)), 
+    setCurrentUser : (user) => dispatch(setCurrentUserAction(user)),
     addProfile: (profile) => dispatch(addProfileAction(profile)),
-    toggleLogin: () => dispatch(toggleLoginAction()), 
-    setEmail: (value) => dispatch(setEmailAction(value)), 
+    toggleLogin: () => dispatch(toggleLoginAction()),
+    setEmail: (value) => dispatch(setEmailAction(value)),
     setPassword: (value) => dispatch(setPasswordAction(value)),
     setProfileUserName: (name)=> dispatch(setProfileUserNameAction(name))
   }
@@ -36,7 +36,7 @@ function mapDispatchToProps(dispatch, ownProps){
 
 
 
-class NavigationView extends Component {  
+class NavigationView extends Component {
 
 
   dropDown(){
@@ -44,11 +44,11 @@ class NavigationView extends Component {
       return(
         <NavDropdown eventKey={2} title= {this.props.currentUser} id = "user-drop-down">
           <MenuItem eventKey={2.1} ><Link to={/profile/ + this.props.currentUser}><span onClick={()=>this.props.setProfileUserName(this.props.currentUser)} >Profile</span></Link></MenuItem>
-          <MenuItem eventKey={2.3}><Link to="/logout">Log Out</Link></MenuItem>  
-        </NavDropdown> 
-      )     
+          <MenuItem eventKey={2.3}><Link to="/logout">Log Out</Link></MenuItem>
+        </NavDropdown>
+      )
     } else {
-      return <NavItem eventKey={2}><Link to="/login">Login</Link></NavItem>  
+      return <NavItem eventKey={2}><Link to="/login">Login</Link></NavItem>
     }
   }
 
@@ -83,11 +83,11 @@ class NavigationView extends Component {
                 this.props.setPassword('')
                 this.props.setEmail('')
                 this.props.setProfileUserName(profile.userName)
-                this.props.addProfile(profile)  
+                this.props.addProfile(profile)
                 this.props.setCurrentUser(loginSuccess.user.userName)
                 this.props.toggleLogin()
                browserHistory.push('/profile/' + loginSuccess.user.userName)
-              }) 
+              })
           } else {
             alert('Login failed. You should feel bad.')
           }
@@ -113,18 +113,19 @@ class NavigationView extends Component {
 
   render() {
     return (
-      <Navbar inverse className={"navbar-fixed-top"} fluid = {true}>
+      <Navbar className={"navbar-fixed-top"} fluid = {true}>
         <Header>
           <Brand>
             DM Journal
           </Brand>
         </Header>
         <Nav>
-          <Form>
-            <FormGroup>
-              <ControlLabel className = {'black'}>Navigation Here</ControlLabel>
-            </FormGroup>  
-          </Form>  
+          <NavItem className="black centerText">
+            Login: <input type="text" />
+          </NavItem>
+          <NavItem className="black centerText">
+            Password: <input type="text" />
+          </NavItem>
         </Nav>
       </Navbar>
       );

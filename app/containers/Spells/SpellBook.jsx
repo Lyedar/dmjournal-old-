@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import {Modal, Form, FormGroup, FormControl, ControlLabel, Col, Row, Button, HelpBlock, PanelGroup, Table, Glyphicon} from 'react-bootstrap'
-import {addToListAction, deleteFromListAction, addProfileAction, setSpellActive, setShowSpell, setShowModal, setModalBody, setModalHead} from '../../redux/actions';
+import {addToListAction, deleteFromListAction, addProfileAction, setSpellActive, setShowSpell, setShowModal, setModalBody, setModalHead, setModalFooter} from '../../redux/actions';
 import { Link } from 'react-router';
 import {connect} from 'react-redux';
 import styles from 'css/components/home';
@@ -36,6 +36,7 @@ function mapDispatchToProps(dispatch, ownProps){
   	setModalHead: (mh) => dispatch(setModalHead(mh)),
   	setModalBody: (mb) => dispatch(setModalBody(mb)),
   	setShowModal: (toggle) => dispatch(setShowModal(toggle)),
+		setModalFooter: (toggle) => dispatch(setModalFooter(toggle)),
 
   	addProfile: (profile) => dispatch(addProfileAction(profile)),
   	addPartyMember: (member) => dispatch(addToListAction(member)),
@@ -91,9 +92,10 @@ export default class SpellBook extends React.Component {
  	}
 
 
- 	openSpell(id, name){
+ 	openSpell(id, name, creator){
  		this.props.setModalHead(<div className='black centerText'>{name}</div>);
  		this.props.setModalBody(<SpellModal spellId={id} />);
+		this.props.setModalFooter(<div className='black centerText'>Creator: {creator}</div>);
  		this.props.setShowModal(true)
  	}
  	openSpellCreate(){
@@ -107,7 +109,7 @@ export default class SpellBook extends React.Component {
  		self = this
  		var tableList = self.state.spellList.map(function(spell){
  			var name = spell.name
- 			return (<tr className='hover' key={name + ' row'} onClick={(e)=> self.openSpell(spell.id, name)}>
+ 			return (<tr className='hover' key={name + ' row'} onClick={(e)=> self.openSpell(spell.id, name, spell.creator)}>
 		 				<td key={name + ' level'} className='centerText'>{spell.level}</td>
 		 				<td key={name + ' name'} className='centerText'>{name}</td>
 		 				<td key={name + ' school'} className='centerText'>{spell.school}</td>
