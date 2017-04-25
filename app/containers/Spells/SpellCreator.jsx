@@ -7,7 +7,8 @@ import {Modal,
 	Button, Help, Table,
 	Well,
 	FormGroup,
-	InputGroup
+	InputGroup,
+	Glyphicon
 
 } from 'react-bootstrap'
 import {addToListAction, deleteFromListAction, addProfileAction, setShowModal, setModalHead, setModalBody, setSpellActive} from '../../redux/actions';
@@ -97,43 +98,53 @@ export default class SpellCreator extends React.Component {
 	render(){
 		return(
 			<div className='centerText black'>
-				<FormControl onChange={(e) => this.setState({ spellName :e.target.value})} componentClass="input" placeholder='Spell Name' />
-   			<FormControl onChange={(e) => this.setState({ spellDesc:e.target.value})} className= 'noWidthResize ' componentClass='textarea' placeholder='Spell Description'/>
-    		<FormControl onChange={(e) => this.setState({ spellCT:e.target.value})} componentClass='input' placeholder='Casting Time'/>
-				<FormControl onChange={(e) => this.setState({ spellLevel:e.target.value})} componentClass='input' placeholder='Level' />
+				<Row>
+					<Col md={6}>
+						<FormControl componentClass='input' className="centerText" onChange={(e) => this.setState({spellName :e.target.value})}  placeholder='Spell Name' />
+		    		<FormControl componentClass='input' className="centerText" onChange={(e) => this.setState({spellCT:e.target.value})}  placeholder='Casting Time'/>
+						<FormControl componentClass='input' className="centerText" onChange={(e) => this.setState({spellLevel:e.target.value})}  placeholder='Level' />
+						<FormControl componentClass='input' className="centerText" onChange={(e) => this.setState({ spellDuration :e.target.value})}  placeholder='duration' />
+						<FormControl componentClass='input' className="centerText" onChange={(e) => this.setState({ spellRange :e.target.value})}  placeholder='range' />
+					</Col>
+					<Col md={6}>
+						<FormControl componentClass='textarea' onChange={(e) => this.setState({spellDesc:e.target.value})} className='form-control noWidthResize'  placeholder='Spell Description'/>
+					</Col>
+			</Row>
 				<Row>
 					<Col md={4}>
+						<ControlLabel>Classes</ControlLabel>
 						<FormControl onChange={(e)=> this.onClassChange(e) } componentClass="select" multiple> {this.classSelector()} </FormControl>
 					</Col>
-					<Col  md={4} />
+					<Col  md={4}>
+						<ControlLabel>School of Magic</ControlLabel>
+						<FormControl onChange={(e) => this.setState({ spellSchool :e.target.value})} componentClass="select">
+		  				<option value={'abjuration'}>Abjuration</option>
+		  				<option value={'conjuration'}>Conjuration</option>
+		  				<option value={'divination'}>Divination</option>
+		  				<option value={'enchantment'}>Enchantment</option>
+		  				<option value={'evocation'}>Evocation</option>
+		  				<option value={'illusion'}>Illusion</option>
+		  				<option value={'necromancy'}>Necromancy</option>
+		  				<option value={'transmutation'}>Transmutation</option>
+						</FormControl>
+					</Col>
 					<Col md={4}>
-      				<FormGroup>
-			      <InputGroup>
-			        <InputGroup.Addon>
-			          <input type="radio" checked={this.state.materialsCheck} onClick={(e)=> this.setState({materialsCheck : !this.state.materialsCheck})} />
-			        </InputGroup.Addon>
-			        <FormControl type="text" value={this.state.spellMaterials} onChange ={(e)=> this.setState({spellMaterials : e.target.value})} placeholder="Materials Needed"/>
-			      </InputGroup>
-			    </FormGroup>
-
-      				<h5><input type="radio" label='somatic' checked={this.state.spellSomatic} onClick={(e)=> this.setState({spellSomatic : !this.state.spellSomatic})}/>Somatic</h5>
-      				<h5><input type="radio" label='verbal' checked={this.state.spellVerbal} onClick={(e)=> this.setState({spellVerbal : !this.state.spellVerbal})} />Verbal</h5>
-      				<h5><input type="radio" label='ritual' checked={this.state.spellRitual} onClick={(e)=> this.setState({spellRitual : !this.state.spellRitual})} />Ritual</h5>
-    				</Col>
+      			<FormGroup>
+							<ControlLabel>Casting</ControlLabel>
+				      <InputGroup>
+				        <InputGroup.Addon>
+				          <input type="radio" checked={this.state.materialsCheck} onClick={(e)=> this.setState({materialsCheck : !this.state.materialsCheck})} />
+				        </InputGroup.Addon>
+				        <FormControl type="text" value={this.state.spellMaterials} onChange ={(e)=> this.setState({spellMaterials : e.target.value})} placeholder="Materials Needed"/>
+				      </InputGroup>
+							<h5 label='somatic' onClick={(e)=> this.setState({spellSomatic : !this.state.spellSomatic})} > Somatic {this.state.spellSomatic ? <Glyphicon className = "green" glyph="ok"/> : <Glyphicon className = "red" glyph="remove"/>}</h5>
+      				<h5 label='verbal' onClick={(e)=> this.setState({spellVerbal : !this.state.spellVerbal})} > Verbal {this.state.spellVerbal ? <Glyphicon className = "green" glyph="ok"/> : <Glyphicon className = "red" glyph="remove"/>}</h5>
+      				<h5 label='ritual' onClick={(e)=> this.setState({spellRitual : !this.state.spellRitual})} > Ritual {this.state.spellRitual ? <Glyphicon className = "green" glyph="ok"/> : <Glyphicon className = "red" glyph="remove"/>}</h5>
+						</FormGroup>
+    			</Col>
 				</Row>
-				<FormControl onChange={(e) => this.setState({ spellDuration :e.target.value})} componentClass='input' placeholder='duration' />
-				<FormControl onChange={(e) => this.setState({ spellRange :e.target.value})} componentClass='input' placeholder='range' />
-				<FormControl onChange={(e) => this.setState({ spellSchool :e.target.value})} componentClass="select">
-  				<option value={0}>School of Magic</option>
-  				<option value={'abjuration'}>Abjuration</option>
-  				<option value={'conjuration'}>Conjuration</option>
-  				<option value={'divination'}>Divination</option>
-  				<option value={'enchantment'}>Enchantment</option>
-  				<option value={'evocation'}>Evocation</option>
-  				<option value={'illusion'}>Illusion</option>
-  				<option value={'necromancy'}>Necromancy</option>
-  				<option value={'transmutation'}>Transmutation</option>
-				</FormControl>
+
+
 				<Button onClick={(e)=>this.submitButton()} >Submit</Button>
 		</div>
 			)

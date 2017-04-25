@@ -80,18 +80,16 @@ function addProfileAction(profile) {
 	return{
 		type: "ADD_PROFILE",
 		profile
-	}	
+	}
 }
 
 function toggleLoginAction(){
-	console.log("ACTION BABY!")
 	return{
 		type: "TOGGLE_LOGIN"
 	}
 }
 
 function loginTrueAction(){
-	console.log('HI BOYS')
 	return{
 		type: "LOGIN_TRUE"
 	}
@@ -206,7 +204,7 @@ function setResultsAction(results){
 	}
 }
 
-//ERROR MESSAGE ACTIONS	
+//ERROR MESSAGE ACTIONS
 
 function setErrorMessageAction(message){
 	return {

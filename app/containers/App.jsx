@@ -19,7 +19,7 @@ const cx = classNames.bind(styles);
  */
 
 function mapStateToProps(state){
-  return { 
+  return {
     currentUser : state.getIn(["currentUser", "userName"])
   }
 }
@@ -37,28 +37,28 @@ function mapDispatchToProps(dispatch){
 }
 
 export default class App extends Component {
-  
+
 
    componentWillMount(){
     console.log('App restart')
-    this.getUser()
+  //  this.getUser()
   }
 
-   getUser() {
-    requestApi('/api/v1/getuser')()
-      .then((user) => {
-        if(user.loggedIn) {
-          requestApi('/api/v1/getprofile/' + user.userName)()
-            .then((profile)=>{
-              this.props.setUser(profile.userName)
-              this.props.addProfile(profile)
-              this.props.loginTrue()
-            })
-        } else {
-          this.props.setUser({})
-        }
-      })
-   }
+  //  getUser() {
+  //   requestApi('/api/v1/getuser')()
+  //     .then((user) => {
+  //       if(user.loggedIn) {
+  //         requestApi('/api/v1/getprofile/' + user.userName)()
+  //           .then((profile)=>{
+  //             this.props.setUser(profile.userName)
+  //             this.props.addProfile(profile)
+  //             this.props.loginTrue()
+  //           })
+  //       } else {
+  //         this.props.setUser({})
+  //       }
+  //     })
+  //  }
 
 
   render() {

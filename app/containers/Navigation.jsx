@@ -74,19 +74,18 @@ class NavigationView extends Component {
   }
 
   loginReq() {
-    requestApi('/api/v1/login', 'POST')({email: this.props.email , password: this.props.password})
+    requestApi('/api/v1/login', 'POST')({email: "Yui" , password: "Yui"})
       .then(loginSuccess=>
         {
           if(loginSuccess.success){
             requestApi('/api/v1/getprofile/'+loginSuccess.user.userName)()
               .then((profile)=>{
-                this.props.setPassword('')
-                this.props.setEmail('')
-                this.props.setProfileUserName(profile.userName)
-                this.props.addProfile(profile)
+                // this.props.setPassword('')
+                // this.props.setEmail('')
+                // this.props.addProfile(profile)
                 this.props.setCurrentUser(loginSuccess.user.userName)
-                this.props.toggleLogin()
-               browserHistory.push('/profile/' + loginSuccess.user.userName)
+                // this.props.toggleLogin()
+                console.log("look! You logged in: " + loginSuccess.user.userName)
               })
           } else {
             alert('Login failed. You should feel bad.')
@@ -105,7 +104,7 @@ class NavigationView extends Component {
     }else{
       return (
         <div>
-        {::this.loginDisplay()}
+        {this.loginDisplay()}
         </div>
         )
       }
@@ -120,12 +119,15 @@ class NavigationView extends Component {
           </Brand>
         </Header>
         <Nav>
-          <NavItem className="black centerText">
-            Login: <input type="text" />
-          </NavItem>
-          <NavItem className="black centerText">
-            Password: <input type="text" />
-          </NavItem>
+          <Navbar.Form className="centerText">
+            <FormGroup>
+              <FormControl type="text" placeholder="Username" className="centerText"/>
+              {' '}
+              <FormControl type="text" placeholder="Password" className="centerText"/>
+              {' '}
+              <Button onClick={()=>this.loginReq()}>Login</Button>
+            </FormGroup>
+          </Navbar.Form>
         </Nav>
       </Navbar>
       );

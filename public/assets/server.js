@@ -29777,9 +29777,9 @@ module.exports =
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _SignUp = __webpack_require__(731);
+	var _Register = __webpack_require__(731);
 
-	var _SignUp2 = _interopRequireDefault(_SignUp);
+	var _Register2 = _interopRequireDefault(_Register);
 
 	var _LogOut = __webpack_require__(732);
 
@@ -29791,17 +29791,18 @@ module.exports =
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/*
+	/* 
 	 * @param {Redux Store}
 	 * We require store as an argument here because we wish to get
 	 * state from the store after it has been authenticated.
+	 *Hello Testing a save
 	 */
 	exports.default = function (store) {
 	  return _react2.default.createElement(
 	    _reactRouter.Route,
 	    { path: '/', component: _App2.default },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _Home2.default }),
-	    _react2.default.createElement(_reactRouter.Route, { path: 'profile/:slug', component: _Profile2.default }),
+	    _react2.default.createElement(_reactRouter.Route, { path: 'register', component: _Register2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: 'logout', component: _LogOut2.default }),
 	    _react2.default.createElement(_reactRouter.Route, { path: '*', component: _PageNotFound2.default })
 	  );
@@ -30588,14 +30589,12 @@ module.exports =
 	}
 
 	function toggleLoginAction() {
-		console.log("ACTION BABY!");
 		return {
 			type: "TOGGLE_LOGIN"
 		};
 	}
 
 	function loginTrueAction() {
-		console.log('HI BOYS');
 		return {
 			type: "LOGIN_TRUE"
 		};
@@ -30706,7 +30705,7 @@ module.exports =
 		};
 	}
 
-	//ERROR MESSAGE ACTIONS	
+	//ERROR MESSAGE ACTIONS
 
 	function setErrorMessageAction(message) {
 		return {
@@ -47960,25 +47959,26 @@ module.exports =
 	    key: 'componentWillMount',
 	    value: function componentWillMount() {
 	      console.log('App restart');
-	      this.getUser();
+	      //  this.getUser()
 	    }
-	  }, {
-	    key: 'getUser',
-	    value: function getUser() {
-	      var _this2 = this;
 
-	      (0, _requests2.default)('/api/v1/getuser')().then(function (user) {
-	        if (user.loggedIn) {
-	          (0, _requests2.default)('/api/v1/getprofile/' + user.userName)().then(function (profile) {
-	            _this2.props.setUser(profile.userName);
-	            _this2.props.addProfile(profile);
-	            _this2.props.loginTrue();
-	          });
-	        } else {
-	          _this2.props.setUser({});
-	        }
-	      });
-	    }
+	    //  getUser() {
+	    //   requestApi('/api/v1/getuser')()
+	    //     .then((user) => {
+	    //       if(user.loggedIn) {
+	    //         requestApi('/api/v1/getprofile/' + user.userName)()
+	    //           .then((profile)=>{
+	    //             this.props.setUser(profile.userName)
+	    //             this.props.addProfile(profile)
+	    //             this.props.loginTrue()
+	    //           })
+	    //       } else {
+	    //         this.props.setUser({})
+	    //       }
+	    //     })
+	    //  }
+
+
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -48183,16 +48183,15 @@ module.exports =
 	    value: function loginReq() {
 	      var _this3 = this;
 
-	      (0, _requests2.default)('/api/v1/login', 'POST')({ email: this.props.email, password: this.props.password }).then(function (loginSuccess) {
+	      (0, _requests2.default)('/api/v1/login', 'POST')({ email: "Yui", password: "Yui" }).then(function (loginSuccess) {
 	        if (loginSuccess.success) {
 	          (0, _requests2.default)('/api/v1/getprofile/' + loginSuccess.user.userName)().then(function (profile) {
-	            _this3.props.setPassword('');
-	            _this3.props.setEmail('');
-	            _this3.props.setProfileUserName(profile.userName);
-	            _this3.props.addProfile(profile);
+	            // this.props.setPassword('')
+	            // this.props.setEmail('')
+	            // this.props.addProfile(profile)
 	            _this3.props.setCurrentUser(loginSuccess.user.userName);
-	            _this3.props.toggleLogin();
-	            _reactRouter.browserHistory.push('/profile/' + loginSuccess.user.userName);
+	            // this.props.toggleLogin()
+	            console.log("look! You logged in: " + loginSuccess.user.userName);
 	          });
 	        } else {
 	          alert('Login failed. You should feel bad.');
@@ -48221,13 +48220,15 @@ module.exports =
 	        return _react2.default.createElement(
 	          'div',
 	          null,
-	          this.loginDisplay.call(this)
+	          this.loginDisplay()
 	        );
 	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this4 = this;
+
 	      return _react2.default.createElement(
 	        _reactBootstrap.Navbar,
 	        { className: "navbar-fixed-top", fluid: true },
@@ -48244,16 +48245,23 @@ module.exports =
 	          _reactBootstrap.Nav,
 	          null,
 	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            { className: 'black centerText' },
-	            'Login: ',
-	            _react2.default.createElement('input', { type: 'text' })
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.NavItem,
-	            { className: 'black centerText' },
-	            'Password: ',
-	            _react2.default.createElement('input', { type: 'text' })
+	            _reactBootstrap.Navbar.Form,
+	            { className: 'centerText' },
+	            _react2.default.createElement(
+	              _reactBootstrap.FormGroup,
+	              null,
+	              _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Username', className: 'centerText' }),
+	              ' ',
+	              _react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', placeholder: 'Password', className: 'centerText' }),
+	              ' ',
+	              _react2.default.createElement(
+	                _reactBootstrap.Button,
+	                { onClick: function onClick() {
+	                    return _this4.loginReq();
+	                  } },
+	                'Login'
+	              )
+	            )
 	          )
 	        )
 	      );
@@ -69468,12 +69476,6 @@ module.exports =
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	/*
-	 * Note: This is kept as a container-level component, 
-	 *  i.e. We should keep this as the container that does the data-fetching 
-	 *  and dispatching of actions if you decide to have any sub-components.
-	 */
-
 	function mapStateToProps(state) {
 	  return {
 	    currentUser: state.get('currentUser'),
@@ -89416,24 +89418,47 @@ module.exports =
 				return _react2.default.createElement(
 					'div',
 					{ className: 'centerText black' },
-					_react2.default.createElement(_reactBootstrap.FormControl, { onChange: function onChange(e) {
-							return _this2.setState({ spellName: e.target.value });
-						}, componentClass: 'input', placeholder: 'Spell Name' }),
-					_react2.default.createElement(_reactBootstrap.FormControl, { onChange: function onChange(e) {
-							return _this2.setState({ spellDesc: e.target.value });
-						}, className: 'noWidthResize ', componentClass: 'textarea', placeholder: 'Spell Description' }),
-					_react2.default.createElement(_reactBootstrap.FormControl, { onChange: function onChange(e) {
-							return _this2.setState({ spellCT: e.target.value });
-						}, componentClass: 'input', placeholder: 'Casting Time' }),
-					_react2.default.createElement(_reactBootstrap.FormControl, { onChange: function onChange(e) {
-							return _this2.setState({ spellLevel: e.target.value });
-						}, componentClass: 'input', placeholder: 'Level' }),
+					_react2.default.createElement(
+						_reactBootstrap.Row,
+						null,
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ md: 6 },
+							_react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'input', className: 'centerText', onChange: function onChange(e) {
+									return _this2.setState({ spellName: e.target.value });
+								}, placeholder: 'Spell Name' }),
+							_react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'input', className: 'centerText', onChange: function onChange(e) {
+									return _this2.setState({ spellCT: e.target.value });
+								}, placeholder: 'Casting Time' }),
+							_react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'input', className: 'centerText', onChange: function onChange(e) {
+									return _this2.setState({ spellLevel: e.target.value });
+								}, placeholder: 'Level' }),
+							_react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'input', className: 'centerText', onChange: function onChange(e) {
+									return _this2.setState({ spellDuration: e.target.value });
+								}, placeholder: 'duration' }),
+							_react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'input', className: 'centerText', onChange: function onChange(e) {
+									return _this2.setState({ spellRange: e.target.value });
+								}, placeholder: 'range' })
+						),
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ md: 6 },
+							_react2.default.createElement(_reactBootstrap.FormControl, { componentClass: 'textarea', onChange: function onChange(e) {
+									return _this2.setState({ spellDesc: e.target.value });
+								}, className: 'form-control noWidthResize', placeholder: 'Spell Description' })
+						)
+					),
 					_react2.default.createElement(
 						_reactBootstrap.Row,
 						null,
 						_react2.default.createElement(
 							_reactBootstrap.Col,
 							{ md: 4 },
+							_react2.default.createElement(
+								_reactBootstrap.ControlLabel,
+								null,
+								'Classes'
+							),
 							_react2.default.createElement(
 								_reactBootstrap.FormControl,
 								{ onChange: function onChange(e) {
@@ -89444,13 +89469,72 @@ module.exports =
 								' '
 							)
 						),
-						_react2.default.createElement(_reactBootstrap.Col, { md: 4 }),
+						_react2.default.createElement(
+							_reactBootstrap.Col,
+							{ md: 4 },
+							_react2.default.createElement(
+								_reactBootstrap.ControlLabel,
+								null,
+								'School of Magic'
+							),
+							_react2.default.createElement(
+								_reactBootstrap.FormControl,
+								{ onChange: function onChange(e) {
+										return _this2.setState({ spellSchool: e.target.value });
+									}, componentClass: 'select' },
+								_react2.default.createElement(
+									'option',
+									{ value: 'abjuration' },
+									'Abjuration'
+								),
+								_react2.default.createElement(
+									'option',
+									{ value: 'conjuration' },
+									'Conjuration'
+								),
+								_react2.default.createElement(
+									'option',
+									{ value: 'divination' },
+									'Divination'
+								),
+								_react2.default.createElement(
+									'option',
+									{ value: 'enchantment' },
+									'Enchantment'
+								),
+								_react2.default.createElement(
+									'option',
+									{ value: 'evocation' },
+									'Evocation'
+								),
+								_react2.default.createElement(
+									'option',
+									{ value: 'illusion' },
+									'Illusion'
+								),
+								_react2.default.createElement(
+									'option',
+									{ value: 'necromancy' },
+									'Necromancy'
+								),
+								_react2.default.createElement(
+									'option',
+									{ value: 'transmutation' },
+									'Transmutation'
+								)
+							)
+						),
 						_react2.default.createElement(
 							_reactBootstrap.Col,
 							{ md: 4 },
 							_react2.default.createElement(
 								_reactBootstrap.FormGroup,
 								null,
+								_react2.default.createElement(
+									_reactBootstrap.ControlLabel,
+									null,
+									'Casting'
+								),
 								_react2.default.createElement(
 									_reactBootstrap.InputGroup,
 									null,
@@ -89464,89 +89548,32 @@ module.exports =
 									_react2.default.createElement(_reactBootstrap.FormControl, { type: 'text', value: this.state.spellMaterials, onChange: function onChange(e) {
 											return _this2.setState({ spellMaterials: e.target.value });
 										}, placeholder: 'Materials Needed' })
+								),
+								_react2.default.createElement(
+									'h5',
+									{ label: 'somatic', onClick: function onClick(e) {
+											return _this2.setState({ spellSomatic: !_this2.state.spellSomatic });
+										} },
+									' Somatic ',
+									this.state.spellSomatic ? _react2.default.createElement(_reactBootstrap.Glyphicon, { className: 'green', glyph: 'ok' }) : _react2.default.createElement(_reactBootstrap.Glyphicon, { className: 'red', glyph: 'remove' })
+								),
+								_react2.default.createElement(
+									'h5',
+									{ label: 'verbal', onClick: function onClick(e) {
+											return _this2.setState({ spellVerbal: !_this2.state.spellVerbal });
+										} },
+									' Verbal ',
+									this.state.spellVerbal ? _react2.default.createElement(_reactBootstrap.Glyphicon, { className: 'green', glyph: 'ok' }) : _react2.default.createElement(_reactBootstrap.Glyphicon, { className: 'red', glyph: 'remove' })
+								),
+								_react2.default.createElement(
+									'h5',
+									{ label: 'ritual', onClick: function onClick(e) {
+											return _this2.setState({ spellRitual: !_this2.state.spellRitual });
+										} },
+									' Ritual ',
+									this.state.spellRitual ? _react2.default.createElement(_reactBootstrap.Glyphicon, { className: 'green', glyph: 'ok' }) : _react2.default.createElement(_reactBootstrap.Glyphicon, { className: 'red', glyph: 'remove' })
 								)
-							),
-							_react2.default.createElement(
-								'h5',
-								null,
-								_react2.default.createElement('input', { type: 'radio', label: 'somatic', checked: this.state.spellSomatic, onClick: function onClick(e) {
-										return _this2.setState({ spellSomatic: !_this2.state.spellSomatic });
-									} }),
-								'Somatic'
-							),
-							_react2.default.createElement(
-								'h5',
-								null,
-								_react2.default.createElement('input', { type: 'radio', label: 'verbal', checked: this.state.spellVerbal, onClick: function onClick(e) {
-										return _this2.setState({ spellVerbal: !_this2.state.spellVerbal });
-									} }),
-								'Verbal'
-							),
-							_react2.default.createElement(
-								'h5',
-								null,
-								_react2.default.createElement('input', { type: 'radio', label: 'ritual', checked: this.state.spellRitual, onClick: function onClick(e) {
-										return _this2.setState({ spellRitual: !_this2.state.spellRitual });
-									} }),
-								'Ritual'
 							)
-						)
-					),
-					_react2.default.createElement(_reactBootstrap.FormControl, { onChange: function onChange(e) {
-							return _this2.setState({ spellDuration: e.target.value });
-						}, componentClass: 'input', placeholder: 'duration' }),
-					_react2.default.createElement(_reactBootstrap.FormControl, { onChange: function onChange(e) {
-							return _this2.setState({ spellRange: e.target.value });
-						}, componentClass: 'input', placeholder: 'range' }),
-					_react2.default.createElement(
-						_reactBootstrap.FormControl,
-						{ onChange: function onChange(e) {
-								return _this2.setState({ spellSchool: e.target.value });
-							}, componentClass: 'select' },
-						_react2.default.createElement(
-							'option',
-							{ value: 0 },
-							'School of Magic'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'abjuration' },
-							'Abjuration'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'conjuration' },
-							'Conjuration'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'divination' },
-							'Divination'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'enchantment' },
-							'Enchantment'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'evocation' },
-							'Evocation'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'illusion' },
-							'Illusion'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'necromancy' },
-							'Necromancy'
-						),
-						_react2.default.createElement(
-							'option',
-							{ value: 'transmutation' },
-							'Transmutation'
 						)
 					),
 					_react2.default.createElement(
@@ -90173,12 +90200,8 @@ module.exports =
 						{ closeButton: true },
 						_react2.default.createElement(
 							_reactBootstrap.Modal.Title,
-							null,
-							_react2.default.createElement(
-								'h2',
-								{ className: 'centerText black' },
-								monster.name
-							)
+							{ className: 'centerText black' },
+							monster.name
 						)
 					),
 					_react2.default.createElement(
@@ -90868,6 +90891,8 @@ module.exports =
 
 	var _reactBootstrap = __webpack_require__(308);
 
+	var _reactRedux = __webpack_require__(268);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -90878,13 +90903,58 @@ module.exports =
 
 	var cx = _bind2.default.bind(_home2.default);
 
-	var SignUp = function (_React$Component) {
-		_inherits(SignUp, _React$Component);
 
-		function SignUp(props) {
-			_classCallCheck(this, SignUp);
+	function mapStateToProps(state) {
+		return {
+			currentUser: state.get('currentUser'),
+			userName: state.get('userName'),
+			email: state.get('email'),
+			password: state.get('password'),
+			confirmPassword: state.get('confirmPassword'),
+			loggedIn: state.get('loggedIn'),
+			errorMessage: state.get('errorMessage')
+		};
+	}
 
-			var _this = _possibleConstructorReturn(this, (SignUp.__proto__ || Object.getPrototypeOf(SignUp)).call(this, props));
+	function mapDispatchToProps(dispatch) {
+		return {
+			setProfile: function setProfile(profile) {
+				return dispatch(setProfileAction(profile));
+			},
+			toggleLoggin: function toggleLoggin() {
+				return dispatch(toggleLoginAction());
+			},
+			toggleEdit: function toggleEdit() {
+				return dispatch(changeEditAction());
+			},
+			setEmail: function setEmail(email) {
+				return dispatch(setEmailAction(email));
+			},
+			setPassword: function setPassword(password) {
+				return dispatch(setPasswordAction(password));
+			},
+			setConfirm: function setConfirm(password) {
+				return dispatch(setConfirmPasswordAction(password));
+			},
+			setUserName: function setUserName(userName) {
+				return dispatch(setUserNameAction(userName));
+			},
+			setUser: function setUser(user) {
+				return dispatch(setCurrentUserAction(user));
+			},
+			setError: function setError(message) {
+				return dispatch(setErrorMessageAction(message));
+			}
+		};
+	}
+
+	var Register = function (_React$Component) {
+		_inherits(Register, _React$Component);
+
+		function Register(props) {
+			_classCallCheck(this, Register);
+
+			var _this = _possibleConstructorReturn(this, (Register.__proto__ || Object.getPrototypeOf(Register)).call(this, props));
 
 			_this.state = {
 				userName: '',
@@ -90896,7 +90966,7 @@ module.exports =
 			return _this;
 		}
 
-		_createClass(SignUp, [{
+		_createClass(Register, [{
 			key: 'checkInfo',
 			value: function checkInfo() {
 				if (this.state.userName === '') {
@@ -90915,7 +90985,7 @@ module.exports =
 			key: 'pullUser',
 			value: function pullUser() {
 				var self = this;
-				console.log(self);
+				var user;
 				fetch('/api/v1/signup', {
 					credentials: 'same-origin',
 					method: 'POST',
@@ -90931,12 +91001,14 @@ module.exports =
 				}).then(function (response) {
 					return response.json();
 				}).then(function (json) {
-					self.setState(json);
+					console.log(json);
+					self.setState({ success: json.success });
+					user = json.user;
+					console.log("Success: " + success + " user: " + user);
 				}).catch(function (ex) {
 					console.log('parsing failed', ex);
 				}).then(function () {
-					if (self.state.success === "true") {
-						self.createCollection();
+					if (self.success === true) {
 						_reactRouter.browserHistory.push('/');
 					}
 				});
@@ -90956,23 +91028,26 @@ module.exports =
 				var self = this;
 				return _react2.default.createElement(
 					'div',
-					{ className: 'marginTop' },
+					null,
 					_react2.default.createElement(
-						'label',
-						{ className: 'alertText' },
-						this.inUse()
-					),
-					_react2.default.createElement(
-						'label',
-						{ className: 'alertText' },
-						this.state.error ? this.state.error : ''
-					),
-					_react2.default.createElement(
-						'form',
-						null,
+						_reactBootstrap.Well,
+						{ className: 'darkWoodBackground marginTop centerText' },
+						_react2.default.createElement('br', null),
+						' ',
+						_react2.default.createElement('br', null),
+						_react2.default.createElement(
+							'label',
+							{ className: 'alertText' },
+							this.inUse()
+						),
+						_react2.default.createElement(
+							'label',
+							{ className: 'alertText' },
+							this.state.error ? this.state.error : ''
+						),
 						_react2.default.createElement(
 							_reactBootstrap.FormGroup,
-							null,
+							{ className: 'centerText' },
 							_react2.default.createElement(
 								_reactBootstrap.Row,
 								null,
@@ -91053,21 +91128,23 @@ module.exports =
 									_react2.default.createElement('br', null)
 								)
 							)
+						),
+						_react2.default.createElement(
+							_reactBootstrap.Button,
+							{ onClick: this.checkInfo.bind(this), bsStyle: 'primary' },
+							'Sign Up'
 						)
-					),
-					_react2.default.createElement(
-						_reactBootstrap.Button,
-						{ onClick: this.checkInfo.bind(this), bsStyle: 'primary' },
-						'Sign Up'
 					)
 				);
 			}
 		}]);
 
-		return SignUp;
+		return Register;
 	}(_react2.default.Component);
 
-	exports.default = SignUp;
+	exports.default = Register;
+
+	module.exports = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Register);
 
 /***/ },
 /* 732 */

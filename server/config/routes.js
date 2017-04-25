@@ -13,9 +13,9 @@
  //var suggestionsController = require('../controllers/suggestionsController')
 
  module.exports = function(app, passport) {
-  
+
   var multer  =   require('multer');
-  
+
   var suffix = {
     'image/jpeg' : 'jpg',
     'image/png'  : 'png'
@@ -41,7 +41,7 @@
       }));
 
   app.get('/api/v1/signup/:result',function(req, res){
-    if(req.params.result=== 'true'){
+    if(req.params.result === 'true'){
       res.json({success: true, user: req.user.local})
     }else{
       res.json({success: false})
@@ -61,7 +61,7 @@
     }else{
       res.json({success: false})
     }
-  })//write function her 
+  })//write function her
 
   app.get('/api/v1/user',function(req,res){
     res.json({user : _.get(req, 'user.username','none')});
@@ -81,7 +81,7 @@
       res.json({loggedIn : false})
     }
 
-    
+
   })
 
   app.get('/api/v1/getallusers', function(req,res){
@@ -100,9 +100,9 @@
     }
   })
 
-  
+
   function isLoggedIn(req, res, next) {
-    // if user is authenticated in the session, carry on 
+    // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
       return next();
 

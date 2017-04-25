@@ -51,10 +51,6 @@ tr.hover:hover{
     color:white;
 }
 
-
-
-
-
 .underLine{
 	text-decoration: underline;
 }
@@ -73,13 +69,19 @@ tr.hover:hover{
 
 
 .noWidthResize {
-	height: auto;
-	resize:vertical;	
+	resize:vertical;
+	height:100%;
 }
+
+textarea.form-control.noWidthResize {
+	resize:vertical;
+	height:170px;
+}
+
 
 .minHeight{
 	min-height: 100px;
-}	
+}
 
 .wellTransparent{
 	background-color: transparent;
@@ -180,11 +182,7 @@ tr.hover:hover{
 
 .invisableButton{
 	background:none;
-	border:none; 
-}
-
-.invisableButton:hover{
-	background:hotpink;
+	border:none;
 }
 
 .widthChange{

@@ -34,13 +34,13 @@ function mapDispatchToProps(dispatch, ownProps){
   	setMonster: (monster) => dispatch(setMonsterActive(monster)),
 
   	addProfile: (profile) => dispatch(addProfileAction(profile)),
-  	addPartyMember: (member) => dispatch(addToListAction(member)), 
+  	addPartyMember: (member) => dispatch(addToListAction(member)),
   	deletePartyMember: (member) => dispatch(deleteFromListAction(member))
   }
 }
 
 export default class MonsterModal extends React.Component {
-	
+
 	constructor(props){
  		super(props);
  		this.state={
@@ -65,7 +65,7 @@ export default class MonsterModal extends React.Component {
 			this.setArrays(this.props.monster.special_abilities, 'special_abilities')
  			this.setArrays(this.props.monster.legendary_actions, 'legendary_actions')
  		})
- 		
+
 
  	}
 
@@ -109,11 +109,11 @@ export default class MonsterModal extends React.Component {
 											<th key={actionType+' deschead'} className='black centerText'>Description</th>
 											<th key={actionType+' abhead'} className='black centerText'>Attack Bonus</th>
 											<th key={actionType+' damagehead'} className='black centerText'>Damage</th>
-											
+
 					    				</tr>
 								</thead>
 								<tbody key={actionType+' tbody'}>
-				 					{this.state[actionType]} 
+				 					{this.state[actionType]}
 				 				</tbody>
 			 				</Table>
 				</span>)} />
@@ -127,7 +127,7 @@ export default class MonsterModal extends React.Component {
  		return(
  			<Modal show={this.props.monsterVisable} bsSize = "large" onHide={()=>self.props.setShowMonster()}>
 	         	<Modal.Header closeButton>
-	            	<Modal.Title ><h2 className='centerText black'>{monster.name}</h2></Modal.Title>
+	            	<Modal.Title className='centerText black' >{monster.name}</Modal.Title>
 	          	</Modal.Header>
 	          	<Modal.Body className='centerText black'>
 	          		<h3>Challenge Rating: {monster.challenge_rating}</h3>
@@ -148,13 +148,13 @@ export default class MonsterModal extends React.Component {
 				 			<Table key='skills Table' className='black' striped bordered condensed hover>
 				 				<thead key='skills thead'>
 				 					<tr>
-						 				<th key='strength head'>Strength</th> 
-						 				<th key='dexterity head'>Dexterity</th> 
-						 				<th key='constitution head'>Constitution</th> 
-						 				<th key='intelligence head'>Intelligence</th> 
-						 				<th key='wisdom head'>Wisdom</th> 
-						 				<th key='charisma head'>Charisma</th> 
-						 			</tr>	
+						 				<th key='strength head'>Strength</th>
+						 				<th key='dexterity head'>Dexterity</th>
+						 				<th key='constitution head'>Constitution</th>
+						 				<th key='intelligence head'>Intelligence</th>
+						 				<th key='wisdom head'>Wisdom</th>
+						 				<th key='charisma head'>Charisma</th>
+						 			</tr>
 				 				</thead>
 				 				<tbody key='skills tbody' className='black' striped bordered condensed hover>
 				 					<tr>
@@ -165,8 +165,8 @@ export default class MonsterModal extends React.Component {
 										<td key='wisdom tbody'>{monster.wisdom}</td>
 										<td key='charisma tbody'>{monster.charisma}</td>
 									</tr>
-								</tbody>		
-				 			</Table>	
+								</tbody>
+				 			</Table>
 			 			</Col>
 
 						<Row>
@@ -196,18 +196,18 @@ export default class MonsterModal extends React.Component {
 			 		</Well>
 			 		{this.state.actions.length>0? this.panels('actions', 'Actions') : (<span/>)}
 			 		{this.state.special_abilities.length>0? this.panels('special_abilities', 'Special Abilities') : (<span/>)}
-			 		{this.state.legendary_actions.length>0? this.panels('legendary_actions', 'Legendary Actions') : (<span/>)}	
-				</Modal.Body>	
+			 		{this.state.legendary_actions.length>0? this.panels('legendary_actions', 'Legendary Actions') : (<span/>)}
+				</Modal.Body>
 	          	<Modal.Footer bsClass='noLine'><span className = "centerText">end</span></Modal.Footer>
         	</Modal>
-        )	
+        )
  	}
 
 	render(){
 		return(
 			<div>
 				{this.modal()}
-			</div>	
+			</div>
 			)
 	}
 

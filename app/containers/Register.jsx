@@ -4,9 +4,36 @@ import styles from 'css/components/home';
 import 'whatwg-fetch';
 const cx = classNames.bind(styles);
 import {browserHistory} from 'react-router';
-import {Button, form, FormGroup, ControlLabel, FormControl, Col, Row} from 'react-bootstrap';
+import {Button, form, FormGroup, ControlLabel, FormControl, Col, Row, Well} from 'react-bootstrap';
+import {connect} from 'react-redux'
 
-export default class SignUp extends React.Component {
+function mapStateToProps(state){
+  return {
+  	currentUser: state.get('currentUser'),
+    userName: state.get('userName'),
+    email: state.get('email'),
+    password: state.get('password'),
+    confirmPassword: state.get('confirmPassword'),
+    loggedIn: state.get('loggedIn'),
+    errorMessage: state.get('errorMessage')
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    setProfile : (profile) => dispatch(setProfileAction(profile)),
+    toggleLoggin : () => dispatch(toggleLoginAction()),
+    toggleEdit : () => dispatch(changeEditAction()),
+    setEmail : (email) => dispatch(setEmailAction(email)),
+    setPassword: (password) => dispatch(setPasswordAction(password)),
+    setConfirm: (password) => dispatch(setConfirmPasswordAction(password)),
+    setUserName: (userName) => dispatch(setUserNameAction(userName)),
+    setUser: (user) => dispatch(setCurrentUserAction(user)),
+    setError: (message) => dispatch(setErrorMessageAction(message))
+  }
+}
+
+export default class Register extends React.Component {
 	constructor(props){
 		super(props)
 		this.state ={
@@ -34,7 +61,7 @@ export default class SignUp extends React.Component {
 
 	pullUser(){
 		var self = this
-		console.log(self)
+    var user
 		fetch('/api/v1/signup', {
 			credentials : 'same-origin',
 			method: 'POST',
@@ -51,12 +78,14 @@ export default class SignUp extends React.Component {
 		.then(function(response) {
 			return response.json()
 		}).then(function(json) {
-			self.setState(json)
+      console.log(json)
+      self.setState({success: json.success})
+      user = json.user;
+      console.log("Success: "+  success + " user: "+ user )
 		}).catch(function(ex) {
 			console.log('parsing failed', ex)
 		}).then(function(){
-			if(self.state.success === "true"){
-				self.createCollection()
+			if(self.success === true){
 				browserHistory.push('/')
 			}
 		})
@@ -70,13 +99,16 @@ export default class SignUp extends React.Component {
 	}
 
 	render(){
-		var self = this 
+		var self = this
 		return(
-			<div className = 'marginTop'>
+			<div>
+			<Well className='darkWoodBackground marginTop centerText' >
+			<br/>
+			{' '}
+			<br/>
 			<label className = 'alertText'>{this.inUse()}</label>
 			<label className = 'alertText'>{this.state.error ? this.state.error : ''}</label>
-			<form>
-				<FormGroup>
+				<FormGroup className='centerText'>
 					<Row>
 						<Col sm={3}>
 							<ControlLabel>Username:</ControlLabel>
@@ -108,8 +140,9 @@ export default class SignUp extends React.Component {
 						</Col>
 					</Row>
 				</FormGroup>
-			</form>
 			<Button onClick ={this.checkInfo.bind(this)} bsStyle = 'primary'>Sign Up</Button>
-			</div>)
+		</Well>
+	</div>)
 		}
 	}
+module.exports = connect(mapStateToProps , mapDispatchToProps)(Register)

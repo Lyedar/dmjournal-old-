@@ -20,15 +20,8 @@ import MonsterDiary from './MonsterDiary'
 import NoteMain from './Notes/NoteMain'
 
 
-
-/*
- * Note: This is kept as a container-level component, 
- *  i.e. We should keep this as the container that does the data-fetching 
- *  and dispatching of actions if you decide to have any sub-components.
- */
-
 function mapStateToProps(state){
-  return { 
+  return {
   	currentUser: state.get('currentUser'),
     userName: state.get('userName'),
     email: state.get('email'),
@@ -52,7 +45,7 @@ function mapDispatchToProps(dispatch){
     setError: (message) => dispatch(setErrorMessageAction(message))
   }
 }
- 
+
  class HomeView extends React.Component {
 
  	constructor(props){
@@ -60,7 +53,7 @@ function mapDispatchToProps(dispatch){
 		this.state={
 			open: false,
 			current : null
-		}	
+		}
 	}
 
 	ToggleOpen(){
@@ -72,7 +65,7 @@ function mapDispatchToProps(dispatch){
  		e.preventDefault()
  		if(this.props.confirmPassword !== this.props.password){
  			this.props.setError("Password's don't match")
- 		}else{	
+ 		}else{
  			console.log('UserName: ', this.props.userName, ' Email: ', this.props.email, ' Password: ', this.props.password)
 	 		requestApi('api/v1/signup', 'POST')({userName: this.props.userName, email: this.props.email, password: this.props.password})
 	 		.then((response) => {
@@ -97,12 +90,12 @@ function mapDispatchToProps(dispatch){
  		this.setState({current : element})
  	}
 
- 	render(){ 
+ 	render(){
  		return (
  			<div className = 'centerText marginTop'>
  				<h1>Welcome to DMJournal</h1>
  				<p>A place for all your things as a DM, easy access to information about the players and your juicy plot hooks</p>
- 				
+
 
 				{/* Player Character Buttons */}
 				<FormGroup>
@@ -118,12 +111,12 @@ function mapDispatchToProps(dispatch){
 	 				</Col>
  				</FormGroup>
 
-	 			{/* Panels of Tools */}	
-	 			<Col md = {3}>	
+	 			{/* Panels of Tools */}
+	 			<Col md = {3}>
 	 			<Well bsSize='large' className='darkWoodBackground' >
 	 				<Row><Button onClick={(e) => this.setCurrent(<span><CantripBuilder /></span>)}>Cantrip Builder</Button></Row>
 		 			<Row><Button onClick={(e) => this.setCurrent(<span><DiceRoller /></span>)}>Dice Roller</Button></Row>
-		 			<Row><Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>NPC Generator</h1></span>)}>NPC Generator</Button></Row>	
+		 			<Row><Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>NPC Generator</h1></span>)}>NPC Generator</Button></Row>
 		 			<Row><Button onClick={(e) => this.setCurrent(<span><SpellBook /></span>)}>Spell Book</Button></Row>
 		 			<Row><Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>Loot Generator</h1></span>)}>Loot Generator</Button></Row>
 		 			<Row><Button onClick={(e) => this.setCurrent(<span><h1 className='black centerText'>Encounters</h1></span>)}>Encounters</Button></Row>
@@ -139,7 +132,7 @@ function mapDispatchToProps(dispatch){
  			</div>
 
  		)
- 	} 	
+ 	}
  }
 
  module.exports = connect(mapStateToProps , mapDispatchToProps)(HomeView)
